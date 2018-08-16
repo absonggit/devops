@@ -2,4 +2,3 @@
 # gitlab
 # jenkins
 # zabbix
-# devops
