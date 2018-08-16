@@ -1,7 +1,5 @@
 #!/bin/bash
 
-
-
 Zabbix_versoin="zabbix-3.4.11"
 _PWD=$(pwd)
 _CONF="$_PWD/conf"
