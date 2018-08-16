@@ -1,5 +1,6 @@
-#!/bin/bash  
-#date 2016-8-16
+#!/bin/bash
+
+
 
 Zabbix_versoin="zabbix-3.4.11"
 _PWD=$(pwd)
@@ -12,35 +13,36 @@ read -p "please input the zabbix server IP:" SERIP
 read -p "please input your hostname:" Client
 
 
-groupadd zabbix  
-useradd -g zabbix -s /sbin/nologin zabbix  
+groupadd zabbix
+useradd -g zabbix -s /sbin/nologin zabbix
 
 cd $(pwd)
+
 yum install gcc wget pcre-devel -y
 wget http://nchc.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/3.4.11/$Zabbix_versoin.tar.gz
-tar xvf $Zabbix_versoin.tar.gz   
-cd $(pwd)/$Zabbix_versoin 
-./configure --prefix=/usr/local/zabbix --enable-agent 
-make 
-make install 
+tar xvf $Zabbix_versoin.tar.gz
+cd $(pwd)/$Zabbix_versoin
+./configure --prefix=/usr/local/zabbix --enable-agent
+make
+make install
 
 cd ../
 \cp -rf $_CONF/zabbix_agentd.conf /usr/local/zabbix/etc/
 cp $_CONF/zabbix_agentd /etc/init.d/
 
-sed -i "s/Server=172.0.0.1/Server=$SERIP/g" /usr/local/zabbix/etc/zabbix_agentd.conf   
-sed -i "s/Hostname=test/Hostname=$Client/g" /usr/local/zabbix/etc/zabbix_agentd.conf   
-sed -i "s/ServerActive=172.0.0.1/ServerActive=$SERIP:10051/g" /usr/local/zabbix/etc/zabbix_agentd.conf   
-chmod a+x /etc/init.d/zabbix_agentd  
-chkconfig --add zabbix_agentd 
+sed -i "s/Server=172.0.0.1/Server=$SERIP/g" /usr/local/zabbix/etc/zabbix_agentd.conf
+sed -i "s/Hostname=test/Hostname=$Client/g" /usr/local/zabbix/etc/zabbix_agentd.conf
+sed -i "s/ServerActive=172.0.0.1/ServerActive=$SERIP:10051/g" /usr/local/zabbix/etc/zabbix_agentd.conf
+chmod a+x /etc/init.d/zabbix_agentd
+chkconfig --add zabbix_agentd
 chkconfig zabbix_agentd on
 
-/etc/init.d/zabbix_agentd start  
-netstat -tunlp | grep zabbix  
+/etc/init.d/zabbix_agentd start
+netstat -tunlp | grep zabbix
 
 echo "######################################################################################################################"
 echo "###                                       ZABBIX MONITORING ITEMS CHOOSE                                           ###"
-echo "######################################################################################################################"                         
+echo "######################################################################################################################"
 
 while :; do echo
     read -p "Do you want to monitoring TCP status,disk io? [y/n]: " TCP_yn
@@ -54,7 +56,7 @@ while :; do echo
 	cp  $_Items/tcp $_Install_Dir/etc/zabbix_agentd.conf.d/
 	cp  $_Items/diskio $_Install_Dir/etc/zabbix_agentd.conf.d/
 
-	chmod 755 /$_Install_Dir/bin/tcp_status 
+	chmod 755 /$_Install_Dir/bin/tcp_status
 	chmod 755 $_Install_Dir/bin/discover_disk.pl
          fi
         break
@@ -71,7 +73,7 @@ while :; do echo
 
 	cp  $_Items/check_port $_Install_Dir/etc/zabbix_agentd.conf.d/
         #sed -i '/root    ALL=(ALL)       ALL/azabbix ALL=NOPASSWD: \/usr\/bin\/python' /etc/sudoers
-	chmod 755 /$_Install_Dir/bin/ports.py 
+	chmod 755 /$_Install_Dir/bin/ports.py
          fi
         break
     fi
@@ -144,7 +146,7 @@ while :; do echo
         if [ "$php_yn" == 'y' ];then
 	cp  $_Items/php $_Install_Dir/etc/zabbix_agentd.conf.d/
 	cp  $_CMD_SHELL/php-fpm_status.sh $_Install_Dir/bin/
-	
+
 	chmod 755 $_Install_Dir/bin/php-fpm_status.sh
          fi
         break
@@ -159,7 +161,7 @@ while :; do echo
         if [ "$ap_yn" == 'y' ];then
 	cp  $_Items/apache $_Install_Dir/etc/zabbix_agentd.conf.d/
 	cp  $_CMD_SHELL/apache_status.sh $_Install_Dir/bin/
-	
+
 	chmod 755 $_Install_Dir/bin/apache_status.sh
          fi
         break
@@ -175,7 +177,7 @@ while :; do echo
         if [ "$me_yn" == 'y' ];then
 	cp  $_CMD_SHELL/memcached_stats.pl $_Install_Dir/bin/
 	cp  $_Items/memcached $_Install_Dir/etc/zabbix_agentd.conf.d/
-	
+
 	chmod 755 $_Install_Dir/bin/memcached_stats.pl
          fi
         break
