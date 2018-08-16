@@ -1,0 +1,1 @@
+UserParameter=Redis.Info[*],/usr/local/zabbix/bin/redis.sh $1 $2

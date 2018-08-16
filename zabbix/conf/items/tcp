@@ -1,0 +1,1 @@
+UserParameter=tcp[*],/usr/local/zabbix/bin/tcp_status $1
