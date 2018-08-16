@@ -1,3 +1,0 @@
-# gitlab
-# jenkins
-# zabbix
