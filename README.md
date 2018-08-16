@@ -1,4 +1,3 @@
-[toc]
 
 # gitlab
 # jenkins
