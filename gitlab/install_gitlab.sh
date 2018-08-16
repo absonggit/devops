@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 yum install -y curl policycoreutils-python openssh-server postfix
 systemctl enable postfix
 systemctl start postfix
