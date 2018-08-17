@@ -1,0 +1,178 @@
+
+自动化运维工具Ansible playbook使用
+
+playbook简述
+      ansbile-playbook是一系统ansible命令的集合，其利用yaml语言编写，运行过程，ansbile-playbook命令根据自上而下的顺序依次执行。
+	同时，playbook开创了很多特性,它可以允许你传输某个命令的状态到后面的指令,如你可以从一台机器的文件中抓取内容并附为变量,然后在另一台机器中使用,这使得你可以实现一些复杂的部署机制,这是ansible命令无法实现的。
+
+	ansible-playbook的简单使用方法: ansible-playbook example-play.yml 。
+
+简单的实例
+	通过playbook添加用户实例
+	1.给远程主机添加用户test
+
+	# vim user.yml              
+	########add user.yml
+	- name: create user
+	  hosts: all
+	  user: root
+	  gather_facts: false
+	  vars:
+	  - user: "test"
+	  tasks:
+	  - name: create  user
+	   user: name="{{ user }}"
+
+	上面的playbook 实现的功能是新增一个用户：
+		name：参数对该playbook实现的功能做一个概述，后面执行过程中，会打印 name变量的值 ；
+		hosts：参数指定了对哪些主机进行参作；
+		user：参数指定了使用什么用户登录远程主机操作；
+		gather_facts：参数指定了在以下任务部分执行前，是否先执行setup模块获取主机相关信息，这在后面的task会使用到setup获取的信息时用到；
+		vars：参数，指定了变量，这里指定了一个user变量，其值为test ，需要注意的是，变量值一定要用引号引住；
+		task：指定了一个任务，其下面的name参数同样是对任务的描述，在执行过程中会打印出来。user提定了调用user模块，name是user模块里的一个参数，而增加的用户名字调用了上面user变量的值。
+
+	删除远程主机的账号:只需user: name="{{ user }}" state=absent remove=yes 即可
+
+	2.通过playbook 安装apache
+	# vim apache.yml              
+	- hosts: 192.168.8.201
+	  user: root
+	  gather_facts: True
+	  tasks:
+	  - name:  install apache on CentOS
+		yum: name=httpd state=present
+
+playbook构成
+	playbook是由一个或多个“play”组成的列表。play的主要功能在于将事先归并为一组的主机装扮成事先通过ansible中的task定义好的角色。
+	从根本上来讲所谓task无非是调用ansible的一个module。将多个play组织在一个playbook中即可以让它们联同起来按事先编排的机制一同工作。
+	其主要有以下四部分构成
+		target section
+			定义将要执行playbook的远程主机组
+		variable section
+			定义playbook运行时需要使用的变量
+		task section
+			定义将要在远程主机上执行的任务列表
+		handler section
+			定义task执行完成以后需要调用的任务
+
+	Target section常用参数
+		hosts：定义远程主机组
+		remote_user：执行该任务的用户
+		sudo: 设置为yes的时候，执行任务的时候使用root权限
+		sudo_user 如果你设置用户为 lansgg ，那么你执行的时候会使用 lansgg 用户的权限
+		connection 通过什么方式连接到远程主机，默认是ssh
+		gather_facks 是否启用在远程主机执行setup模块，默认是会执行的，可用同setup模块获取远程主机的信息，在定义变量的时候使用
+
+
+	Variabler section常用参数
+		vars  定义格式 变量名:变量值
+		vars_files  指定变量文件
+		vars_prompt  用户交互模式自定义变量
+		setup 模块去远程主机的值
+
+	Task section
+		name：输出到屏幕的信息
+		action：定义执行的动作调用ansible的模块例如：yum name=http state=installed就是安装apache服务
+		copy：复制本地文件到远程主机
+		template：复制本地文件到远程主机但是他可以在本地文件中调用变量
+		service ：定义服务的状态
+
+	andler section
+
+	可以理解为处理器，已经为 task section 进行调用，为任务列表操作完毕后的后续动作，当关注的资源发生变化时执行的操作
+
+	示例一:
+		编写一个 playbook 剧本文件，安装 httpd 服务，并将本地准备好的配置文件copy过去某一个位置，这里示例为/tmp下
+		# vim http.yml 
+		- hosts: testservers
+		  remote_user: root
+		  tasks:
+		  - name: instal httpd service
+			yum: name=httpd state=present
+		  - name: copy httpd conf
+			copy: src=/etc/httpd/conf/httpd.conf dest=/tmp/httpd.conf
+
+		# ansible 192.168.8.201 -m shell -a 'ls -l /tmp/httpd*'
+		192.168.8.201 | SUCCESS | rc=0 >>
+		-rw-r--r-- 1 root root 11753 10月 24 18:23 /tmp/httpd.conf
+
+	示例二:
+		安装 httpd 服务，将本地准备好的配置文件 copy 过去，并且启动服务
+		# vim http.yml
+		- hosts: 192.168.8.201
+		  remote_user: root
+		  tasks:
+		  - name: instal httpd service
+			yum: name=httpd state=present
+		  - name: copy httpd conf
+			copy: src=/etc/httpd/conf/httpd.conf dest=/etc/httpd/conf/httpd.conf
+		  - name: start httpd service
+			service: name=httpd state=started
+
+	示例三:
+		将httpd.conf监听的端口改为8080,然后重新覆盖配置文件，当这个配置文件发生改变时，就触发handler进行服务重启
+		notify 这个 action可用于在每个play的最后被触发，这样可以避免多次有改变发生时每次都执行指定的操作，notify中列出的操作称为handler，
+		# vim http.yml
+		- hosts: 192.168.8.201
+		  remote_user: root
+		  tasks:
+		  - name: instal httpd service
+			yum: name=httpd state=present
+		  - name: copy httpd conf
+			copy: src=/etc/httpd/conf/httpd.conf dest=/etc/httpd/conf/httpd.conf
+			notify: 
+			  - restart httpd service
+		  - name: start httpd service
+			service: name=httpd state=started enabled=true
+		  handlers:
+			- name: restart httpd service
+			  service: name=httpd state=restarted
+
+		# ansible 192.168.8.201 -m shell -a 'netstat -nltp |grep 8080'
+
+	示例四:带有vars变量 
+		# vim http.yml
+		- hosts: 192.168.8.201
+		  vars:
+			src_http_dir: "/etc/httpd"
+			dest_http_dir: "/tmp"
+		  remote_user: root
+		  tasks:
+		  - name: copy httpd conf
+			copy: src="{{src_http_dir}}/conf/httpd.conf" dest="{{dest_http_dir}}/http.conf.ansible"
+
+		
+
+	ansible Role实现批量部署lamp环境
+
+一、ansible Role介绍
+	ansilbe自1.2版本引入的新特性，用于层次性、结构化地组织playbook。
+	roles能够根据层次型结构自动装载变量文件、tasks以及handlers等。
+	要使用roles只需要在playbook中使用include指令即可。
+	简单来讲，roles就是通过分别将变量、文件、任务、模块及处理器放置于单独的目录中，
+	并可以便捷地include它们的一种机制。
+	角色一般用于基于主机构建服务的场景中，但也可以是用于构建守护进程等场景中。
+	 
+	 
+	创建role的步骤
+	 
+	(1) 创建以roles命名的目录；
+	(2) 在roles目录中分别创建以各角色名称命名的目录，如webservers等。注意：在roles必须包括 site.yml文件，可以为空；
+	(3) 在每个角色命名的目录中分别创建files、handlers、meta、tasks、templates和vars目录；
+		用不到的目录可以创建为空目录，也可以不创建；
+	(4) 在playbook文件中，调用各角色；
+	 
+	############### role内各目录中可用的文件
+	 
+	tasks目录：至少应该包含一个名为main.yml的文件，其定义了此角色的任务列表；
+	   此文件可以使用include包含其它的位于此目录中的task文件；
+	files目录：存放由copy或script等模块调用的文件；
+	templates目录：template模块会自动在此目录中寻找Jinja2模板文件；
+	handlers目录：此目录中应当包含一个main.yml文件，用于定义此角色用到的各handler；
+		在handler中使用include包含的其它的handler文件也应该位于此目录中；
+	vars目录：应当包含一个main.yml文件，用于定义此角色用到的变量；
+	meta目录：应当包含一个main.yml文件，用于定义此角色的特殊设定及其依赖关系；
+		ansible 1.3及其以后的版本才支持；
+	default目录：为当前角色设定默认变量时使用此目录；应当包含一个main.yml文件。
+
+

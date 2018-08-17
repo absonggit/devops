@@ -1,0 +1,187 @@
+
+自动化运维工具Ansible安装部署
+
+ansible简单介绍 
+	
+	ansible是新出现的自动化运维工具，基于Python开发，集合了众多运维工具（puppet、cfengine、chef、func、fabric）的优点
+	实现了批量系统配置、批量程序部署、批量运行命令等功能。
+	ansible是基于模块工作的，本身没有批量部署的能力。
+	真正具有批量部署的是ansible所运行的模块，ansible只是提供一种框架。
+	
+	主要包括：
+		(1)、连接插件connection plugins：负责和被监控端实现通信；
+		(2)、host inventory：指定操作的主机，是一个配置文件里面定义监控的主机；
+		(3)、各种模块核心模块、command模块、自定义模块；
+		(4)、借助于插件完成记录日志邮件等功能；
+		(5)、playbook：剧本执行多个任务时，非必需可以让节点一次性运行多个任务。
+                                                				
+	基本特性
+		(1)、no agents：不需要在被管控主机上安装任何客户端；
+		(2)、no server：无服务器端，使用时直接运行命令即可；
+		(3)、modules in any languages：基于模块工作，可使用任意语言开发模块；
+		(4)、yaml，not code：使用yaml语言定制剧本playbook；
+		(5)、ssh by default：基于SSH工作；
+		(6)、strong multi-tier solution：可实现多级指挥。
+
+	优点
+		(1)、轻量级，无需在客户端安装agent，更新时，只需在操作机上进行一次更新即可；
+		(2)、批量任务执行可以写成脚本，而且不用分发到远程就可以执行；
+		(3)、使用python编写，维护更简单，ruby语法过于复杂；
+		(4)、支持sudo。
+
+Ansible的安装与配置
+		
+		1.配置好epel yum源安装相应的基础模块，建议使用yum直接安装。
+		# yum  install  python PyYAML  python-paramiko  python-jinja2   python-simplejson  -y
+
+		2.安装ansible
+		# yum install ansible
+
+		3.查看ansible安装目录
+		# ls /etc/ansible/
+		ansible.cfg  hosts  roles
+
+		4.ssh免密登录设置（只在控制端使用）
+		# ssh-keygen -t rsa -P ''
+		# cat /root/.ssh/id_rsa.pub >> /root/.ssh/authorized_keys
+		# chmod 600 /root/.ssh/authorized_keys
+		将公钥传给被管理的机器节点
+		scp  /root/.ssh/authorized_keys 192.168.199.123:/root/.ssh/
+		接着在被管理节点机器上修改文件权限
+		# chmod 600 /root/.ssh/authorized_keys
+		
+		在管理节点上加入ssh-agen的私钥
+		# ssh-agent bash
+		# ssh-add ~/.ssh/id_rsa
+
+		注：如果出现报错的话按一下步骤来进行排查：
+			1.先检查下selinux是否关闭 
+			2.authorized_keys权限是否为600。
+			3.python版本是否一致。
+
+		5.Ansible默认安装好后有一个配置文件/etc/ansible/ansible.cfg，该配置文件中定义了ansible的主机的默认配置部分，
+		如默认是否需要输入密码、是否开启sudo认证、action_plugins插件的位置、hosts主机组的位置、是否开启log功能、默认端口、key文件位置等等，默认的都是关闭。
+	
+
+		6.定义hosts主机组
+		# vim /etc/ansible/hosts
+		[web]
+		192.168.199.123
+
+		简单的测试
+		# ansible web -m command -a 'uptime'
+		192.168.199.124 | SUCCESS | rc=0 >>
+		 12:14:56 up  1:04,  3 users,  load average: 0.00, 0.00, 0.00
+
+
+主机清单的管理
+	
+	Ansible通过读取默认的主机清单配置/etc/ansible/hosts
+	来同时连接到多个远程主机，来执行远程操作任务的
+	但是如果要修改默认路径可以通过修改主配置文件 ansible.cfg 的 hostfile 参数指定相应的路径。
+	具体查看相应的路径为：
+	# vim /etc/ansible/ansible.cfg 
+		remote_port    = 22
+		remote_user = root
+		private_key_file = ~/.ssh/id_rsa_web
+		host_key_checking = False
+		hostfile = /etc/ansible/conf/hosts
+		
+		主机和组（Hosts and Groups）
+		通过配置/etc/ansible/hosts这个文件来定义主机和组	
+		
+		1.简单的主机和组
+		# vim /etc/ansible/conf/hosts
+			[web]					#定义组名
+			192.168.199.123			#定义主机
+			192.168.199.124			#新定义一台主机
+		
+		组定义：
+			可以根据自己的需求将庞大的主机分成具有标识的组
+		主机定义：
+			可以使用域名、主机名、IP地址表示；当然使用前两者时，也需要主机能反解析到相应的IP地址，一般此类配置中多使用IP地址
+		测试：			
+		# ansible web -m command -a 'uptime'
+		192.168.199.123 | SUCCESS | rc=0 >>
+		 12:37:03 up  1:26,  3 users,  load average: 0.00, 0.00, 0.00
+
+		192.168.199.124 | SUCCESS | rc=0 >>
+		 12:37:11 up  1:26,  3 users,  load average: 0.00, 0.00, 0.00
+		
+
+		2.端口
+		SSH默认的端口是22（此时的ansible主机配置文件可以省略）
+		但是如果某些主机的SSH运行在自定义的端口上
+		ansible使用Paramiko进行ssh连接时不会使用你SSH配置文件中列出的端口，但是如果修改ansible使用openssh进行
+		
+		######在client192.168.199.123上ssh开启了2个端口连接
+		[root@localhost ~]# vim /etc/ssh/sshd_config 
+		Port 10022
+		Port 22
+		
+		######在ansible服务端的配置：
+		[root@Monitor ansible]# vim /etc/ansible/conf/hosts            
+		[web]
+		192.168.199.123:10022
+		192.168.199.124
+		
+		测试：
+		# ansible webserver -m command -a 'uptime'  
+		192.168.199.124 | SUCCESS | rc=0 >>
+		 13:00:42 up  1:50,  3 users,  load average: 0.00, 0.00, 0.00
+
+		192.168.199.123 | SUCCESS | rc=0 >>
+		 13:00:30 up  1:50,  3 users,  load average: 0.00, 0.00, 0.01
+		
+		3.指定主机范围
+		hosts官方有个列子是通过指定主机名的范围来进行多台主机的定义
+		
+		   [webservers]
+			node[01:50].com
+		上面指定了从node1.com到node50.com，web组共计50台主机
+		
+		4.使用主机变量
+		hosts主机经常使用到的变量为：
+		ansible_ssh_host     #用于指定被管理的主机的真实IP
+		ansible_ssh_port     #用于指定连接到被管理主机的ssh端口号，默认是22
+		ansible_ssh_user     #ssh连接时默认使用的用户名
+		ansible_ssh_pass     #ssh连接时的密码
+		ansible_sudo_pass     #使用sudo连接用户时的密码
+		ansible_sudo_exec     #如果sudo命令不在默认路径，需要指定sudo命令路径
+		ansible_ssh_private_key_file     #秘钥文件路径，秘钥文件如果不想使用ssh-agent管理时可以使用此选项
+		ansible_shell_type     #目标系统的shell的类型，默认sh
+		ansible_connection     #SSH 连接的类型： local , ssh , paramiko，在 ansible 1.2 之前默认是 paramiko ，后来智能选择，优先使用基于 ControlPersist 的 ssh （支持的前提）
+		ansible_python_interpreter     #用来指定python解释器的路径，默认为/usr/bin/python 同样可以指定ruby 、perl 的路径
+		ansible_*_interpreter     #其他解释器路径，用法与ansible_python_interpreter类似，这里"*"可以是ruby或才perl等其他语言
+		
+		上面的实例也可以配置直接使用用户名和密码进行连接
+		[web]
+		192.168.199.123 ansible_ssh_port=10022 ansible_ssh_user=root ansible_ssh_pass='123456'
+		192.168.199.124
+		
+		测试：
+		# ansible web -m command -a 'uptime'
+		192.168.199.123 | SUCCESS | rc=0 >>
+		 13:08:13 up  1:57,  3 users,  load average: 0.00, 0.00, 0.00
+
+		192.168.199.124 | SUCCESS | rc=0 >>
+		 13:08:26 up  1:58,  3 users,  load average: 0.00, 0.00, 0.00
+		
+		5.Patterns（主机与组正则匹配部分）	
+		Patterns 其实就是ansible中的规则去管理哪些主机，也可以理解为，要与哪台主机进行通信。
+		ansible <pattern_goes_here> -m <module_name> -a <arguments>
+		ansible  <执行的客户机列表> -m <调用的模块>  -a <执行的参数>
+		
+		示例：
+		# ansible web -m service -a "name=httpd state=restarted"
+		这里是ansible对web组内的主机来进行远程重启httpd服务。
+		
+		在Patterns指定要操作的主机可以使用不同的方法表示：
+		web[0]		#表示web主机组中的第一台主机
+		web:db		#表示web和db主机组中的所有主机
+		web[0:25]  	#表示匹配web组的第1个到第25个主机
+		*.baidu.com #表示所有的以baidu.com结尾的主机
+		*.com       #表示所有的以.com结尾的主机
+
+		
+		
