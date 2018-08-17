@@ -1,48 +1,60 @@
-ipset介绍
+# ipset介绍
 ---
 	ipset是iptables的扩展,它允许你创建 匹配整个地址集合的规则。而不像普通的iptables链只能单IP匹配, ip集合存储在带索引的数据结构中,这种结构即时集合比较大也可以进行高效的查找，除了一些常用的情况,比如阻止一些危险主机访问本机，从而减少系统资源占用或网络拥塞,IPsets也具备一些新防火墙设计方法,并简化了配置.
 
-	官网：urlhttp://ipset.netfilter.org/
-1.ipset安装
-
+	官网：url http://ipset.netfilter.org/
+# ipset安装
+```
 yum安装： yum install ipset
-2.创建一个ipset
-
+```
+# 创建一个ipset
+```
 ipset create xxx hash:net （也可以是hash:ip ，这指的是单个ip,xxx是ipset名称）
 ipset默认可以存储65536个元素，使用maxelem指定数量
 
 ipset create blacklist hash:net maxelem 1000000 #黑名单
 ipset create whitelist hash:net maxelem 1000000 #白名单
-查看已创建的ipset
-
-
+```
+# 查看已创建的ipset
+```
 ipset list
-3.加入一个名单ip
-
+```
+# 加入一个名单ip
+```
 ipset add blacklist 10.60.10.xx
-4.去除名单ip
-
+```
+# 去除名单ip
+```
 ipset del blacklist 10.60.10.xx
-5.创建防火墙规则，与此同时，allset这个IP集里的ip都无法访问80端口（如：CC攻击可用）
-
+```
+# 创建防火墙规则，与此同时，allset这个IP集里的ip都无法访问80端口（如：CC攻击可用）
+```
 iptables -I INPUT -m set –match-set blacklist src -p tcp -j DROP
 iptables -I INPUT -m set –match-set whitelist src -p tcp -j DROP
 service iptables save
 iptables -I INPUT -m set –match-set setname src -p tcp –destination-port 80 -j DROP
-6.将ipset规则保存到文件
-
+```
+# 将ipset规则保存到文件
+```
 ipset save blacklist -f blacklist.txt
 ipset save whitelist -f whitelist.txt
-7.删除ipset
-
+```
+# 删除ipset
+```
 ipset destroy blacklist
 ipset destroy whitelist
-8.导入ipset规则
-
+```
+#导入ipset规则
+```
 ipset restore -f blacklist.txt
 ipset restore -f whitelist.txt
+```
+
+
 ipset的一个优势是集合可以动态的修改，即使ipset的iptables规则目前已经启动，新加的入ipset的ip也生效
 屏蔽一组地址
+
+
 	先创建一个新的网络地址的“集合”。下面的命令创建了一个新的叫做“myset”的“net”网络地址的“hash”集合。
 
 	# ipset create myset hash:net
