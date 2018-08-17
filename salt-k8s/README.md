@@ -17,8 +17,7 @@
 3. 使用Salt SSH执行状态，不需要安装Agent，保证通用性。
 4. 使用Kubernetes当前稳定版本v1.10.3，保证稳定性。
 
-## 技术交流QQ群（加群请备注来源于Github）：
-- 云计算与容器架构师：252370310
+
 
 # 使用手册
 <table border="0">
@@ -44,7 +43,7 @@
 ## 案例架构图
 
   ![架构图](https://github.com/unixhot/salt-kubernetes/blob/master/docs/K8S.png)
-  
+
 ## 0.系统初始化
 1. 设置主机名！！！
 2. 设置/etc/hosts保证主机名能够解析
@@ -83,7 +82,7 @@ Kubernetes二进制文件下载地址： https://pan.baidu.com/s/1zs8sCouDeCQJ9l
 
 ```
 [root@linux-node1 ~]# cd /srv/salt/k8s/
-[root@linux-node1 k8s]# unzip k8s-v1.10.3-auto.zip 
+[root@linux-node1 k8s]# unzip k8s-v1.10.3-auto.zip
 [root@linux-node1 k8s]# ls -l files/
 total 0
 drwxr-xr-x. 2 root root  94 Jun  3 19:12 cfssl-1.2
@@ -100,7 +99,7 @@ drwxr-xr-x. 3 root root  17 Jun  3 19:12 k8s-v1.10.3
 - etcd-name: 如果对一台机器设置了etcd-role就必须设置etcd-name
 
 ```
-[root@linux-node1 ~]# vim /etc/salt/roster 
+[root@linux-node1 ~]# vim /etc/salt/roster
 linux-node1:
   host: 192.168.56.11
   user: root
@@ -234,7 +233,7 @@ rtt min/avg/max/mdev = 22.960/22.960/22.960/0.000 ms
 - 2.在/etc/salt/roster里面，增加对应的机器
 - 3.执行SaltStack状态salt-ssh '*' state.highstate。
 ```
-[root@linux-node1 ~]# vim /etc/salt/roster 
+[root@linux-node1 ~]# vim /etc/salt/roster
 linux-node4:
   host: 192.168.56.14
   user: root
@@ -256,4 +255,3 @@ linux-node4:
 - [Flannel网络部署](docs/flannel.md)
 - [创建第一个K8S应用](docs/app.md)
 - [CoreDNS和Dashboard部署](docs/dashboard.md)
-
