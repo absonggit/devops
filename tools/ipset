@@ -14,6 +14,7 @@ ipset create blacklist hash:net maxelem 1000000 #黑名单
 ipset create whitelist hash:net maxelem 1000000 #白名单
 查看已创建的ipset
 
+
 ipset list
 3.加入一个名单ip
 
