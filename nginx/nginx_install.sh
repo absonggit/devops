@@ -12,7 +12,7 @@ id -u ${nginx_user} >/dev/null 2>&1
   tar xzf ${package_dir}nginx-1.14.0.tar.gz
   tar xzf ${package_dir}openssl-1.0.2p.tar.gz
   cp ${package_dir}* /data/package
-
+  yum install -y gcc gcc-c++ zlib-devel
   cd nginx-1.14.0
   ./configure --prefix=${nginx_install_dir} --user=${nginx_user} --group=${nginx_user} --with-http_stub_status_module --with-http_v2_module --with-http_ssl_module --with-http_gzip_static_module --with-http_realip_module --with-http_flv_module --with-http_mp4_module --with-openssl=../openssl-1.0.2p --with-pcre=../pcre-8.42 --with-pcre-jit --with-ld-opt='-L jemalloc'
   make  && make install
