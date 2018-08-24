@@ -1,0 +1,38 @@
+python2
+---------------------
+from __future__ import print_function
+for x in range(1,10):
+    for j in range(1,10):
+        if x>=j:
+            print("%s*%s=%s"%(j,x,x*j),end=" ")
+        else:
+	    continue
+    print("")
+
+js
+---------------------
+for (x=1;x<=9;x++) {
+	for (j=1;j<=9;j++){
+		if (x>=j) {
+		process.stdout.write(`${j}*${x}=${x*j}\t`);
+		}else{
+		continue;
+		}
+	}
+	console.log()
+}
+
+bash
+---------------------
+for (( x=1; x<=9; x++ ))
+do
+        for (( j=1; j<=9; j++))
+	do
+                if [ $x -ge $j ];then
+                	echo -en "$j*$x=$((x*j))\t"
+                else
+                	continue
+		fi
+	done
+    	echo
+done
