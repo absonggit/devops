@@ -1,7 +1,5 @@
 #!/bin/bash
-# Description: install jdk8
-# Date:
-# Author:
+
 
 tar zxvf ./package/jdk-8u144-linux-x64.tar.gz -C ./package/
 if [ ! -d "/data" ];then mkdir -p /data/package;fi

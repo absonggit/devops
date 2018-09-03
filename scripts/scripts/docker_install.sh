@@ -1,7 +1,5 @@
 #!/bin/bash
-# Description: install docker and docker-compose service
-# date:
-# Author:
+
 
 # install docker service
 yum -y install yum-utils

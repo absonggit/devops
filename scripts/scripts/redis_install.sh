@@ -1,7 +1,5 @@
 #!/bin/bash
-# Description: make install redis
-# Date: 2018/8/20
-# Author: francis
+
 
 redis_v="4.0.9"
 install_dir="/data"

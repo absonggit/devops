@@ -1,7 +1,5 @@
 #!/bin/bash
-# Description: install tomcat8
-# Date:
-# Author:
+
 
 if [ ! -d "/data/package" ];then mkdir -p /data/package;fi
 if [ ! -d "/data/WebServer" ];then mkdir -p /data/WebServer;fi

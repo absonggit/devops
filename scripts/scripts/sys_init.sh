@@ -1,7 +1,5 @@
 #!/bin/bash
-#Description：New system initialization operation.
-#Date： 
-#Author：
+
 
 function run_status() {
   #return statu after operation.

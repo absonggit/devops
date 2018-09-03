@@ -1,4 +1,6 @@
 #!/bin/bash
+
+
 nginx_user="www"
 nginx_install_dir="/data/nginx"
 package_dir="./package/"
@@ -19,7 +21,7 @@ id -u ${nginx_user} >/dev/null 2>&1
   if [ -e "${nginx_install_dir}/conf/nginx.conf" ]; then
     echo "Nginx installed successfully!"
   fi
-  
+
   cd ../
   [ -z "`grep ^'export PATH=' /etc/profile`" ] && echo "export PATH=${nginx_install_dir}/sbin:\$PATH" >> /etc/profile
   [ -n "`grep ^'export PATH=' /etc/profile`" -a -z "`grep ${nginx_install_dir} /etc/profile`" ] && sed -i "s@^export PATH=\(.*\)@export PATH=${nginx_install_dir}/sbin:\1@" /etc/profile

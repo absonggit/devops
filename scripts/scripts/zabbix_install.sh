@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 Zabbix_versoin="zabbix-3.4.12"
 _PWD=$(pwd)
 _CONF="$_PWD/conf/zabbix"
@@ -7,7 +8,7 @@ _CMD_SHELL="$_PWD/conf/zabbix/shell"
 _Items="$_PWD/conf/zabbix/items"
 _Install_Dir="/usr/local/zabbix"
 Client="$(echo -n `curl ip.cn | egrep -o "[0-9]{1,3}"` |tr " " ".")"
-SERIP="27.111.239.84"
+SERIP="2.2.2.128"
 
 groupadd zabbix
 useradd -g zabbix -s /sbin/nologin zabbix

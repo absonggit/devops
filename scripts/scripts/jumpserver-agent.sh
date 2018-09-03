@@ -1,7 +1,5 @@
 #!/bin/bash
-# Description: jumpserver-agent install
-# Date: 2018/08/19
-# Author: francis
+
 
 # public key for every user
 root_key="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDMLpt8oR9MbmG8V2JWiAlQLH8yXbjDyaIC7KrqgZ6CzEdMW75giDr1gqL8g0lRcCUCNu6HLlgXI4CUWjXZwiXT/YAgK55nyptbAyK4YQh0rJw1u9eyXcTb+lH4ei/UIHUnfFylDlR24RYdg6NRID/5cxnvwgcl40UpdpMLVw2kzf3HQHoDwjDkWnpU9ox6ioR7iXcVXatByzDy395EPJOXF14ZLa8Jw2Rlloi9aZPA0qfMtbHXOJYQcm+Ovp51yhs0wFPi5Vc5j8Wt1HxMRI3IvZ+OuYbvgqXjCUzHON90bmnnkJNE6W/U0kHAIR2lwRhoOqnYXbOJRjNdPkDh5S1 root@localhost.localdomain"

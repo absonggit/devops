@@ -1,7 +1,5 @@
 #!/bin/bash
-# Description: make install rabbitmq.
-# Date: 2018/8/20
-# Author: francis
+
 
 # 安装依赖
 yum install -y gcc gcc-c++ glibc-devel make ncurses-devel openssl-devel autoconf java-1.8.0-openjdk-devel xmlto
