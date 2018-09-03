@@ -1,0 +1,1 @@
+UserParameter=mysql[*],mysql -uzabbix -h localhost -pzabbix@456852  -e "show global status"|grep "\<$1\>"|cut -f2

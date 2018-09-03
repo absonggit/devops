@@ -1,0 +1,4 @@
+UserParameter=Active,/usr/local/zabbix/bin/nginx_status.sh Active
+UserParameter=Reading,/usr/local/zabbix/bin/nginx_status.sh Reading
+UserParameter=Writing,/usr/local/zabbix/bin/nginx_status.sh Writing
+UserParameter=Waiting,/usr/local/zabbix/bin/nginx_status.sh Waiting

@@ -1,0 +1,1 @@
+UserParameter=tcp_services,sudo python /usr/local/zabbix/bin/ports.py
