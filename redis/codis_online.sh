@@ -15,7 +15,7 @@ fi
 #安装软件包
 rpm -Uvh http://repos.mesosphere.io/el/7/noarch/RPMS/mesosphere-el-repo-7-1.noarch.rpm
 yum install java-1.8.0-openjdk golang mesosphere-zookeeper -y
-wget https://github.com/CodisLabs/codis/releases/download/3.2.2/codis3.2.2-go1.8.5-linux.tar.gz
+wget https://github.com/CodisLabs/codis/releases/download/3.2.2/codis3.2.2-go1.8.5-linux.tar.gz || exit
 tar xvzf codis3.2.2-go1.8.5-linux.tar.gz -C $Install_dir
 
 #修改目录名
