@@ -1,0 +1,6 @@
+[
+    {
+        "name": "codis_mode",
+        "dashboard": "0.0.0.0:18080"
+    }
+]
