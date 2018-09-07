@@ -1,8 +1,8 @@
 #!/bin/bash
 Install_dir="/data"
 codis_dir=$Install_dir/codis
-zk_addr="2.2.2.130:2181"
-dash_addr="2.2.2.130:18080"
+zk_addr="0.0.0.0:2181"
+dash_addr="0.0.0.0:18080"
 admin_addr="0.0.0.0:11080"
 proxy_addr="0.0.0.0:19000"
 product_name="codis_test"
