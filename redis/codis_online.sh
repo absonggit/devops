@@ -15,8 +15,11 @@ fi
 #安装软件包
 rpm -Uvh http://repos.mesosphere.io/el/7/noarch/RPMS/mesosphere-el-repo-7-1.noarch.rpm
 yum install java-1.8.0-openjdk golang mesosphere-zookeeper -y
-wget https://github.com/CodisLabs/codis/releases/download/3.2.2/codis3.2.2-go1.8.5-linux.tar.gz || exit
-tar xvzf codis3.2.2-go1.8.5-linux.tar.gz -C $Install_dir
+
+if [ ! -e "codis3.2.2-go1.8.5-linux.tar.gz" ];then
+    wget https://github.com/CodisLabs/codis/releases/download/3.2.2/codis3.2.2-go1.8.5-linux.tar.gz || exit
+fi
+    tar xvzf codis3.2.2-go1.8.5-linux.tar.gz -C $Install_dir
 
 #修改目录名
 mv $Install_dir/codis3.2.2-go1.8.5-linux/  $Install_dir/codis
@@ -33,6 +36,7 @@ java -version
 
 #生成配置文件并修改
 cp conf/* $codis_dir/conf/
+sed -i 's#dataDir=/var/lib/zookeeper#dataDir=/data/codis/logs#' /etc/zookeeper/conf/zoo.cfg
 sed -i 's#coordinator_name = "filesystem"#coordinator_name = "zookeeper"#g' $codis_dir/conf/dashboard.toml
 sed -i 's#coordinator_addr = "/tmp/codis"#coordinator_addr = "'$zk_addr'"#g' $codis_dir/conf/dashboard.toml
 sed -i 's#product_name = "codis-demo"#product_name = "'$product_name'"#g' $codis_dir/conf/dashboard.toml
