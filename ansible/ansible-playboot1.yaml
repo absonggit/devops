@@ -1,0 +1,14 @@
+---
+- hosts: service-cluster1
+  remote_user: root
+  vars:
+    tomcat_path: /data/WebServer/service
+    jks_workspace: /data/jenkins_home/workspace
+    Web_path: /data/WebServer
+    tomcat_start: "{{ tomcat_path }}/bin/startup.sh"
+    tomcat_stop: "{{ tomcat_path }}/bin/shutdown.sh"
+  tasks:
+  - name: copy war package
+    copy: src={{ jks_workspace }}/service-cluster1/service.war dest={{ Web_path }}/service/webapps/
+  - name: restart tomcat
+    shell: . /etc/profile;set -m;{{ tomcat_stop }};{{ tomcat_start }}
