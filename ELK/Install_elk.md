@@ -1,5 +1,5 @@
 
-###配置清华镜像站yum源
+##配置清华镜像站yum源
 ```
 [root@elk ~]# ntpdate 0.centos.pool.ntp.org
 [root@elk ~]# vim /etc/yum.repos.d/elk.repo
