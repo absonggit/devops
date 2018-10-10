@@ -158,7 +158,7 @@ COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
 java    2017 root   23u  IPv6  22946      0t0  TCP *:eforward (LISTEN)
 ```
 ## 安装配置kafka
-```bash
+```
 [root@kafka ~]# wget http://www-us.apache.org/dist/kafka/2.0.0/kafka_2.11-2.0.0.tgz
 
 [root@kafka ~]# tar xf kafka_2.11-2.0.0.tgz -C /usr/local/
