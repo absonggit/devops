@@ -1,4 +1,16 @@
 
+ELK + Filebeat + Kafka 日志收集分析系统
+
+- Elasticsearch 是基于 JSON 的分布式搜索和分析引擎，专为实现水平扩展、高可用和管理便捷性而设计。
+- Logstash 是动态数据收集管道，拥有可扩展的插件生态系统，能够与 Elasticsearch 产生强大的协同作用。
+- Kibana 能够以图表的形式呈现数据，并且具有可扩展的用户界面，供您全方位配置和管理Elastic Stack 。
+- Filebeat 将为您提供一种轻量型方法，用于转发和汇总日志与文件，让简单的事情不再繁杂。
+- Kafka是一个分布式发布 - 订阅消息系统和一个强大的队列，可以处理大量的数据，并使您能够将消息从一个端点传递到另一个端点。
+--------------
+
+### Filebeat(日志收集) ---> Kafka(日志接收) ---> Logstash(日志过滤) ---> Elasticsearch(日志分析) ---> Kibana(日志展现)
+
+
 ## 配置清华镜像站yum源
 ```
 [root@elk ~]# ntpdate 0.centos.pool.ntp.org
