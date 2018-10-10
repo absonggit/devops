@@ -252,4 +252,3 @@ output.kafka:
 
 自此部署完成，浏览器访问 Kibana serverIP 来查看日志
 ![](./001.png)
-![这里写图片描述](https://img-blog.csdn.net/20180516100903324?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDA2OTM4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
