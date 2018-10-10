@@ -90,7 +90,7 @@ output {
 # 输出到es
   elasticsearch {
     hosts => ["http://2.2.2.10:9200"]
-    index => "%{type}-%{+YYYY.MM.dd}"
+    index => "syslog-%{+YYYY.MM.dd}"
   }
 
 }
