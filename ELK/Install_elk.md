@@ -118,3 +118,117 @@ output.logstash:
 
 [root@elk ~]# systemctl start filebeat
 ```
+## 配置zookeeper yum源
+```
+[root@kafka ~]# vim /etc/yum.repos.d/mesosphere.repo
+[mesosphere]
+name=Mesosphere Packages for EL 7 - $basearch
+baseurl=http://repos.mesosphere.io/el/7/$basearch/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mesosphere
+
+[mesosphere-noarch]
+name=Mesosphere Packages for EL 7 - noarch
+baseurl=http://repos.mesosphere.io/el/7/noarch/
+enabled=1
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mesosphere
+
+[mesosphere-source]
+name=Mesosphere Packages for EL 7 - $basearch - Source
+baseurl=http://repos.mesosphere.io/el/7/SRPMS/
+enabled=0
+gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mesosphere
+
+[root@kafka ~]# yum install java-1.8.0-openjdk -y
+[root@kafka ~]# yum install mesosphere-zookeeper -y
+[root@kafka ~]# vim /etc/zookeeper/conf/zoo.cfg
+maxClientCnxns=50
+tickTime=2000
+initLimit=10
+syncLimit=5
+dataDir=/var/lib/zookeeper
+clientPort=2181
+
+[root@kafka ~]# systemctl start zookeeper
+[root@kafka ~]# lsof -i:2181
+COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+java    2017 root   23u  IPv6  22946      0t0  TCP *:eforward (LISTEN)
+```
+```
+[root@kafka ~]# wget http://www-us.apache.org/dist/kafka/2.0.0/kafka_2.11-2.0.0.tgz
+
+[root@kafka ~]# tar xf kafka_2.11-2.0.0.tgz -C /usr/local/
+[root@kafka ~]# mv /usr/local/kafka_2.11-2.0.0/ /usr/local/kafka
+[root@kafka ~]# cd /usr/local/kafka
+[root@kafka kafka]# egrep -v "^#|^$" config/server.properties
+broker.id=0
+port=9092
+host.name=kafka.node1
+num.network.threads=3
+num.io.threads=8
+socket.send.buffer.bytes=102400
+socket.receive.buffer.bytes=102400
+socket.request.max.bytes=104857600
+log.dirs=/tmp/kafka-logs
+num.partitions=1
+num.recovery.threads.per.data.dir=1
+offsets.topic.replication.factor=1
+transaction.state.log.replication.factor=1
+transaction.state.log.min.isr=1
+log.retention.hours=168
+log.segment.bytes=1073741824
+log.retention.check.interval.ms=300000
+zookeeper.connect=2.2.2.11:2181
+zookeeper.connection.timeout.ms=6000
+group.initial.rebalance.delay.ms=0
+
+[root@kafka kafka]# grep -v ^# config/zookeeper.properties
+dataDir=/var/lib/zookeeper
+clientPort=2181
+maxClientCnxns=0
+
+[root@kafka kafka]# ./bin/kafka-server-start.sh config/server.properties &
+
+[root@kafka kafka]# lsof -i:9092
+COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+java    2064 root  100u  IPv6  23904      0t0  TCP kafka.node1:XmlIpcRegSvc (LISTEN)
+java    2064 root  116u  IPv6  23911      0t0  TCP kafka.node1:52468->kafka.node1:XmlIpcRegSvc (ESTABLISHED)
+java    2064 root  117u  IPv6  23912      0t0  TCP kafka.node1:XmlIpcRegSvc->kafka.node1:52468 (ESTABLISHED)
+
+创建topic
+./bin/kafka-topics.sh --create --zookeeper 2.2.2.11:2181 --replication-factor 1 --partitions 1 --topic test
+发送消息
+./bin/kafka-console-producer.sh --broker-list 2.2.2.11:9092 --topic test
+消费消息
+./bin/kafka-console-consumer.sh --bootstrap-server 2.2.2.11:9092 --topic test --from-beginning
+
+配置ELK上的logstash
+[root@elk ~]# vim /etc/logstash/conf.d/logstash-kafka.conf
+input {
+    kafka {
+        type => "kafka-logs"
+        bootstrap_servers => "2.2.2.11:9092"
+        group_id => "logstash"
+        auto_offset_reset => "earliest"
+        topics => "test"
+        consumer_threads => 5
+        decorate_events => true
+        }
+}
+
+output {
+    elasticsearch {
+    index => 'kafka-log-%{+YYYY.MM.dd}'
+    hosts => ["2.2.2.10:9200"]
+}
+
+配置kafka上的filebeat
+[root@kafka ~]# vim /etc/filebeat/filebeat.yml
+output.kafka:
+  enabled: true
+  hosts: ["2.2.2.11:9092"]
+  topic: test
+```
