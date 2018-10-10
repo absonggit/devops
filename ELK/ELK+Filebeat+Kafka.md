@@ -238,10 +238,16 @@ output {
     hosts => ["2.2.2.10:9200"]
 }
 
+[root@elk ~]# systemctl restart logstash
+
 配置kafka上的filebeat
 [root@kafka ~]# vim /etc/filebeat/filebeat.yml
 output.kafka:
   enabled: true
   hosts: ["2.2.2.11:9092"]
   topic: test
+
+[root@kafka ~]# systemctl restart filebeat
 ```
+
+自此部署完成，浏览器访问 Kibana serverIP 来查看日志
