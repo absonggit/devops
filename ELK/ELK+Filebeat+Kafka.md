@@ -251,4 +251,4 @@ output.kafka:
 ```
 
 自此部署完成，浏览器访问 Kibana serverIP 来查看日志
-！[](./001.png)
+!()[./001.png]
