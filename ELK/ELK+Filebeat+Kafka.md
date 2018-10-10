@@ -8,7 +8,7 @@ ELK + Filebeat + Kafka 日志收集分析系统
 - Kafka是一个分布式发布 - 订阅消息系统和一个强大的队列，可以处理大量的数据，并使您能够将消息从一个端点传递到另一个端点。
 --------------
 
-### Filebeat(日志收集) ---> Kafka(日志接收) ---> Logstash(日志过滤) ---> Elasticsearch(日志分析) ---> Kibana(日志展现)
+#### Filebeat(日志收集) ---> Kafka(日志接收) ---> Logstash(日志过滤) ---> Elasticsearch(日志分析) ---> Kibana(日志展现)
 
 
 ## 配置清华镜像站yum源
