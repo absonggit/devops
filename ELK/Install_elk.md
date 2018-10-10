@@ -29,7 +29,7 @@ net.ipv4.ip_forward = 1
 [root@elk ~]# yum install java-1.8.0-openjdk -y
 ```
 
-## 安装配置Elasticsearch Logstash Kibana
+## 安装配置Elasticsearch Logstash Kibana Filebeat
 ```
 [root@elk ~]# yum install elasticsearch logstash kibana nodejs filebeat -y
 
