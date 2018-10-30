@@ -1,9 +1,9 @@
 #!/bin/bash
-ping -c www.baidu.com &> /dev/null
-[ $? -ne 0 ] && {
-echo "无法连接外网,请检查网络"
-exit
-}
+#ping -c www.baidu.com &> /dev/null
+#[ $? -ne 0 ] && {
+#echo "无法连接外网,请检查网络"
+#exit
+#}
 
 echo "[Info] 时间同步"
 ntpdate 0.centos.pool.ntp.org &>/dev/null
