@@ -56,7 +56,7 @@ all-node# mv /opt/kafka_2.12-2.0.0/ /opt/kafka
 all-node# cd /opt/kafka
 all-node# egrep -v "^#|^$" config/server.properties
 broker.id=1  #节点间的数字不一样即可
-listeners=PLAINTEXT://2.2.2.11:9092 #IP为不同节点的IP
+listeners=PLAINTEXT://2.2.2.11:9092 #IP随不同节点的IP变化
 num.network.threads=3
 num.io.threads=8
 socket.send.buffer.bytes=102400
