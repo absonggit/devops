@@ -1,9 +1,10 @@
 
-kafka集群
-ip       hostname  software
-2.2.2.11 node1.com kafka1 zookeeper1
-2.2.2.12 node2.com kafka2 zookeeper2
-2.2.2.13 node3.com kafka3 zookeeper3
+# kafka集群
+|ip|hostname|software|
+|:--|:--|:--|
+|2.2.2.11|node1.com|kafka1 zookeeper1|
+|2.2.2.12|node2.com|kafka2 zookeeper2|
+|2.2.2.13|node3.com|kafka3 zookeeper3|
 
 配置zookeeper集群(yum源)
 
