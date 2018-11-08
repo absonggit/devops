@@ -1,53 +1,53 @@
 
 # kafka集群
-|ip|hostname|software|
+|IP|HOSTNAME|SOFTWARE|
 |:--|:--|:--|
 |2.2.2.11|node1.com|kafka1 zookeeper1|
 |2.2.2.12|node2.com|kafka2 zookeeper2|
 |2.2.2.13|node3.com|kafka3 zookeeper3|
+---
+## 配置zookeeper集群(yum源)
+```
+all-node# vim /etc/yum.repos.d/mesosphere.repo
+[mesosphere]
+name=Mesosphere Packages for EL 7 - $basearch
+baseurl=http://repos.mesosphere.io/el/7/$basearch/
+enabled=1
+gpgcheck=0
 
-配置zookeeper集群(yum源)
+[mesosphere-noarch]
+name=Mesosphere Packages for EL 7 - noarch
+baseurl=http://repos.mesosphere.io/el/7/noarch/
+enabled=1
+gpgcheck=0
 
-    all-node# vim /etc/yum.repos.d/mesosphere.repo
-    [mesosphere]
-    name=Mesosphere Packages for EL 7 - $basearch
-    baseurl=http://repos.mesosphere.io/el/7/$basearch/
-    enabled=1
-    gpgcheck=0
+[mesosphere-source]
+name=Mesosphere Packages for EL 7 - $basearch - Source
+baseurl=http://repos.mesosphere.io/el/7/SRPMS/
+enabled=0
+gpgcheck=0
 
-    [mesosphere-noarch]
-    name=Mesosphere Packages for EL 7 - noarch
-    baseurl=http://repos.mesosphere.io/el/7/noarch/
-    enabled=1
-    gpgcheck=0
+all-node# yum install java-1.8.0-openjdk -y
+all-node# yum install mesosphere-zookeeper -y
+all-node# vim /etc/zookeeper/conf/zoo.cfg
+maxClientCnxns=50
+tickTime=2000
+initLimit=10
+syncLimit=5
+dataDir=/var/lib/zookeeper
+clientPort=2181
+server.1=2.2.2.11:2888:3888
+server.2=2.2.2.12:2888:3888
+server.3=2.2.2.13:2888:3888
 
-    [mesosphere-source]
-    name=Mesosphere Packages for EL 7 - $basearch - Source
-    baseurl=http://repos.mesosphere.io/el/7/SRPMS/
-    enabled=0
-    gpgcheck=0
-
-    all-node# yum install java-1.8.0-openjdk -y
-    all-node# yum install mesosphere-zookeeper -y
-    all-node# vim /etc/zookeeper/conf/zoo.cfg
-    maxClientCnxns=50
-    tickTime=2000
-    initLimit=10
-    syncLimit=5
-    dataDir=/var/lib/zookeeper
-    clientPort=2181
-    server.1=2.2.2.11:2888:3888
-    server.2=2.2.2.12:2888:3888
-    server.3=2.2.2.13:2888:3888
-
-    node1# echo 1 > /var/lib/zookeeper/myid
-    node2# echo 2 > /var/lib/zookeeper/myid
-    node3# echo 3 > /var/lib/zookeeper/myid
-    all-node# systemctl start zookeeper
-    all-node# lsof -i:2181
-    COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
-    java    2017 root   23u  IPv6  22946      0t0  TCP *:eforward (LISTEN)
-
+node1# echo 1 > /var/lib/zookeeper/myid
+node2# echo 2 > /var/lib/zookeeper/myid
+node3# echo 3 > /var/lib/zookeeper/myid
+all-node# systemctl start zookeeper
+all-node# lsof -i:2181
+COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+java    2017 root   23u  IPv6  22946      0t0  TCP *:eforward (LISTEN)
+```
 安装配置kafka
     all-node# wget http://www-us.apache.org/dist/kafka/2.0.0/kafka_2.12-2.0.0.tgz
     all-node# tar xf kafka_2.12-2.0.0.tgz -C /opt
