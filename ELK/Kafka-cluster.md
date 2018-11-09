@@ -6,7 +6,7 @@
 |2.2.2.12|node2.com|kafka2 zookeeper2|
 |2.2.2.13|node3.com|kafka3 zookeeper3|
 ---
-## 配置zookeeper集群(yum源)
+## 安装配置zookeeper集群
 ```
 all-node# vim /etc/yum.repos.d/mesosphere.repo
 [mesosphere]
@@ -48,12 +48,25 @@ all-node# lsof -i:2181
 COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
 java    2017 root   23u  IPv6  22946      0t0  TCP *:eforward (LISTEN)
 ```
-## 安装配置kafka
+## 安装配置kafka集群
 ```
+rpm版安装:
+all-node# wget https://raw.githubusercontent.com/absonggit/devops/master/ELK/kafka-1.0.1-2.x86_64.rpm
+all-node# yum install kafka-1.0.1-2.x86_64.rpm -y
+
+默认位置：
+二进制文件：/opt/kafka
+数据：/var/lib/kafka
+logs：/var/log/kafka
+configs：/etc/kafka，/etc/sysconfig/kafka
+
+二进制版安装:
 all-node# wget http://www-us.apache.org/dist/kafka/2.0.0/kafka_2.12-2.0.0.tgz
 all-node# tar xf kafka_2.12-2.0.0.tgz -C /opt
 all-node# mv /opt/kafka_2.12-2.0.0/ /opt/kafka
 all-node# cd /opt/kafka
+
+配置：
 all-node# egrep -v "^#|^$" config/server.properties
 broker.id=1  #节点间的数字不一样即可
 listeners=PLAINTEXT://2.2.2.11:9092 #IP为本机IP
@@ -75,7 +88,11 @@ zookeeper.connect=2.2.2.11:2181,2.2.2.12:2181,2.2.2.13:2181
 zookeeper.connection.timeout.ms=6000
 group.initial.rebalance.delay.ms=0
 
+启动服务
+二进制版：
 all-node# ./bin/kafka-server-start.sh -daemon /opt/kafka/config/server.properties
+rpm版：
+all-node# systemctl start kafka
 
 all-node# lsof -i:9092
 COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
@@ -86,9 +103,9 @@ java    2064 root  117u  IPv6  23912      0t0  TCP kafka.node1:XmlIpcRegSvc->kaf
 ## 测试
 ```
 创建topic
-./bin/kafka-topics.sh --create --zookeeper 2.2.2.11:2181 --replication-factor 3 --partitions 1 --topic test
+/opt/kafka/bin/kafka-topics.sh --create --zookeeper 2.2.2.11:2181 --replication-factor 3 --partitions 1 --topic test
 发送消息，会进入交互模式，可以输入任意的字符
-./bin/kafka-console-producer.sh --broker-list 2.2.2.12:9092 --topic test
+/opt/kafka/bin/kafka-console-producer.sh --broker-list 2.2.2.12:9092 --topic test
 消费消息，会得到刚才输入的字符
-./bin/kafka-console-consumer.sh --bootstrap-server 2.2.2.13:9092 --topic test --from-beginning
+/opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server 2.2.2.13:9092 --topic test --from-beginning
 ```
