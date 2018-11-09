@@ -86,7 +86,7 @@ java    2064 root  117u  IPv6  23912      0t0  TCP kafka.node1:XmlIpcRegSvc->kaf
 ## 测试
 ```
 创建topic
-./bin/kafka-topics.sh --create --zookeeper 2.2.2.11:2181 --replication-factor 1 --partitions 1 --topic test
+./bin/kafka-topics.sh --create --zookeeper 2.2.2.11:2181 --replication-factor 3 --partitions 1 --topic test
 发送消息，会进入交互模式，可以输入任意的字符
 ./bin/kafka-console-producer.sh --broker-list 2.2.2.12:9092 --topic test
 消费消息，会得到刚才输入的字符
