@@ -1,42 +1,26 @@
 ### 1. 安装awx
-#### step 0. 系统环境
-- centos7 64位
-- python 2.7.5
-内存必须要在2G以上
-
 #### step 1. clone repo
 ``` bash
 git clone https://github.com/ansible/awx.git
 ```
 #### step 2. 准备工作
-安装 Ansible（Version 2.4+）
+安装 Ansible
 ``` bash
-yum install ansible -y
-```
-> centos7 里面的ansible版本是大于2.4的，此处安装的是2.5.5
-
-安装 Docker
-可以参照这个安装教程：[docker installation](https://github.com/xiaotuanyu120/linux-Operation-and-maintenance-manual/blob/master/virtualization/docker/docker_1.1.0_installation_centos7.md)
-
-安装 docker-py Python module
-``` bash
-wget https://bootstrap.pypa.io/get-pip.py
-python get-pip.py
-pip install docker
+# yum install -y epel-release
+# yum install ansible -y
 ```
 
-安装 GNU Make
+安装 Docker docker-compose
 ``` bash
-yum install make -y
-```
+# yum install -y yum-utils
+# yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+# yum install docker-ce -y
+# systemctl enable docker
+# systemctl start docker
 
-安装 Git Requires Version 1.8.4+
-参照这个安装教程: [git installation from source](https://github.com/xiaotuanyu120/linux-Operation-and-maintenance-manual/blob/master/devops/git/git_1.1.0_install.md)
-``` bash
-# 安装docker之后，安装docker-compose
-wget https://github.com/docker/compose/releases/download/1.17.1/docker-compose-Linux-x86_64
-mv docker-compose-Linux-x86_64 /usr/bin/docker-compose
-chmod 755 /usr/bin/docker-compose
+# yum install -y python-pip
+# pip install --upgrade pip
+# pip install docker-compose
 ```
 
 安装 Node 6.x LTS version and NPM 3.x LTS
