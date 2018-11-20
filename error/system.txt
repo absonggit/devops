@@ -1,0 +1,4 @@
+1.CentOS7 无法启动，enter emergency mode 报错 Failed to mount /sysroot
+  解决方法:
+    # xfs_repair -v -L /dev/dm-0
+    # reboot
