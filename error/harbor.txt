@@ -1,0 +1,15 @@
+1. 登陆 Error response from daemon: Get https://2.2.2.11/v2/: dial tcp 2.2.2.11:443: connect: connection refused
+   解决：
+# vim /etc/docker/daemon.json
+{
+    "insecure-registries": [
+        "2.2.2.11"
+    ]
+}
+
+# vim /usr/lib/systemd/system/docker.service
+ExecStart=/usr/bin/dockerd $DOCKER_OPTS
+DOCKER_OPTS="-insecure-registry 2.2.2.11"
+
+# systemctl daemon-reload
+# systemctl restart docker
