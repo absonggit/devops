@@ -1,0 +1,4 @@
+1. Error: Package: zabbix-server-mysql-4.2.0-0.1alpha1.el7.x86_64 (zabbix)
+           Requires: libiksemel.so.3()(64bit)
+  解决方法:
+     # yum install http://springdale.math.ias.edu/data/puias/unsupported/7/x86_64//iksemel-1.4-6.sdl7.x86_64.rpm
