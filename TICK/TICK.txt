@@ -1,0 +1,5 @@
+
+wget https://dl.influxdata.com/influxdb/releases/influxdb-1.7.2.x86_64.rpm
+wget https://dl.influxdata.com/telegraf/releases/telegraf-1.9.1-1.x86_64.rpm
+wget https://dl.influxdata.com/kapacitor/releases/kapacitor-1.5.2.x86_64.rpm
+wget https://dl.influxdata.com/chronograf/releases/chronograf-1.7.5.x86_64.rpm
