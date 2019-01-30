@@ -6,7 +6,7 @@
 - [gitlab](./gitlab)
 - [jenkins](./jenkins)
 - [nginx](./nginx)
-- [rancher](./rancher)
+- [rancher](./rancher/README.md)
 - [redis](./redis)
 - [salt-k8s](./salt-k8s)
 - [scripts](./scripts)
