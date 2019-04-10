@@ -1,0 +1,1 @@
+UserParameter=apache[*],/usr/local/zabbix/bin/apache_status.sh  $1

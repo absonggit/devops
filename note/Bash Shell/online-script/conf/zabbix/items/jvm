@@ -1,0 +1,3 @@
+UserParameter=jvm.name,/usr/local/zabbix/bin/jvm_name.sh
+UserParameter=jvm.thread.num[*],/usr/local/zabbix/bin/jvm_thread_num.sh
+UserParameter=jvm.status[*],/usr/local/zabbix/bin/jvm_status.sh $1 $2

@@ -1,0 +1,9 @@
+```
+# MYSQL8 创建数据库用户密码以及权限
+CREATE DATABASE `db` DEFAULT CHARSET UTF8 COLLATE utf8_general_ci;
+CREATE USER 'user'@'localhost' IDENTIFIED BY 'pwd';
+CREATE USER 'user'@'%' IDENTIFIED BY 'pwd';
+GRANT ALL PRIVILEGES ON db.* TO 'user'@'localhost' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON db.* TO 'user'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+```

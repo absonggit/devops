@@ -1,0 +1,2 @@
+- 修改论坛数据库下的 'pre_common_member_count'表
+- 新增ID   第一列添加1 保存

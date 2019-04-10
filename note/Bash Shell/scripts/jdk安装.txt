@@ -1,0 +1,49 @@
+# JDK6
+wget http://69.172.86.99:998/jdk-6u45-linux-x64.bin
+# JDK7
+wget http://69.172.86.99:998/jdk-7u79-linux-x64.tar.gz
+# JDK8
+wget http://69.172.86.99:998/jdk-8u144-linux-x64.tar.gz
+
+---
+
+# 此处以jdk7举例
+tar -zxvf jdk-7u79-linux-x64.tar.gz 
+mkdir /usr/java
+mv jdk1.7.0_79/ /usr/java/
+
+
+# java-env配置
+vim /etc/profile.d/java-env.sh
+************************************
+export JAVA_HOME=/usr/java/jdk1.7.0_79
+export JRE_HOME=${JAVA_HOME}/jre
+export PATH=$PATH:${JAVA_HOME}/bin:${JRE_HOME}/bin
+export CLASSPATH=${JAVA_HOME}/lib:${JRE_HOME}/lib
+************************************
+
+# catalina.sh
+************************************
+JAVA_HOME=/usr/java/jdk1.7.0_79
+JRE_HOME=${JAVA_HOME}/jre
+CLASSPATH=${JAVA_HOME}/lib:${JRE_HOME}/lib
+
+JAVA_OPTS="-server -Xms2G -Xmx2G  -XX:PermSize=256m -XX:MaxPermSize=512m -XX:+AggressiveOpts -XX:MaxDirectMemorySize=4G"
+************************************
+
+
+# 熵池底包
+yum -y install rng-tools
+echo 'EXTRAOPTIONS="--rng-device /dev/urandom"' >/etc/sysconfig/rngd
+service rngd start
+chkconfig rngd on
+
+# apr模式
+yum install -y epel-release apr*
+yum install -y tomcat-native
+
+
+# jdk1.6（安装与jdk7和jdk8不同）
+chmod  +x jdk-6u45-linux-x64.bin
+./jdk-6u45-linux-x64.bin 
+mv jdk1.6.0_45 /usr/java/

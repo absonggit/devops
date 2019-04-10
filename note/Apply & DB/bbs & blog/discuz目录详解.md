@@ -1,0 +1,492 @@
+先从根目录开始，根目录文件一般都是入口，即执行具体功能的代码一般不在这些文件中，而是在其调用的文件中
+admin.php 系统站点管理入口文件
+api.php Discuz!合作应用入口文件（例如漫游、支付宝什么的都走这里）
+connect.php QQ互联入口文件
+cp.php 应用入口文件
+crossdomain.xml 数据交互文件，如果在里面定义其它站点的地址，那么这两个不同站点就可以交
+互数据
+favicon.ico 图标文件，显示在浏览器的标题栏
+forum.php 论坛入口文件
+group.php 群组入口文件
+home.php 家园入口文件
+index.php 功能与portal.php基本相同
+member.php 用户信息入口文件
+misc.php 网站用户常用操作入口文件，例如像评分、收藏等功能都是走这个文件的
+plugin.php 插件入口文件
+portal.php 门户入口文件
+robots.txt  在这个文件中加上具体的地址，可以防止被搜索蜘蛛检索到
+search.php 搜索功能入口程序
+userapp.php 用户应用入口程序
+API目录中的文件主要是和Discuz!进行合作的商家的应用程序，一般不要也无需修改，这里不多说明。想了解的可以单独问我，这个目录的大部分文件现在都解密了。
+archiver目录中只有一个index.php，就是经常说的无图版程序的入口，这个一般不是给人看的，是给机器人看的。
+config目录中有两个文件，config_global_default.php是你在安装论坛的时候就要修改的配置文件，另一个config_ucenter_default.php是自动生成的，一般不能手动修改内容，否则会导致出错。
+data目录下的文件通常是动态缓存文件，这些文件里面都带有可以被调用的常量，当然附件、头像等等也是在这里保存的，这个不多说明，实际功能打开看就知道了。
+install是安装程序的目录，里面文件的含义没有太多解释的意义了，这里省略。
+uc_client和uc_server目录中的文件关系到UCentre的运行，一般里面的内容不推荐修改，同理省略。
+static目录中的文件全部属于静态文件，例如像图片、预览什么的，这里我只对下面js目录中的文件进行说明
+Discuz!中许多的Ajax效果都是这个文件中的代码来实现的，会Javascript的可以尝试去改下，后面我生效的位置进行说明
+admincp.js 站点管理
+bbcode.js Discuz!代码效果实现
+calendar.js 日历
+common.js 系统全局
+common_diy.js 首页DIY效果
+common_extra.js 功能基本同common.js
+editor.js 编辑器效果
+forum.js 论坛效果
+forum_moderate.js 论坛管理
+forum_post.js 论坛发帖
+forum_slide.js 论坛边栏
+forum_viewthread.js 论坛主题浏览
+google.js google搜索
+home.js 家园
+home_blog.js 家园日志
+home_drag.js 家园，表格拖动
+home_friendselector.js 家园好友选择
+home_uploadpic.js 家园图片上传
+logging.js 登录
+md5.js MD5加密
+portal.js 首页
+portal_diy.js 首页DIY
+portal_upload.js 首页上传
+register.js 注册页面
+seditor.js 编辑器效果
+smilies.js 表情
+space_diy.js 个人空间DIY
+threadsort.js 主题排序
+tree.js 树形列表
+userapp_swfobject.js FLASH批量上传
+接着回到根目录，这里我对templates/default目录中的模板文件的功能做下解释其中userapp和style里面的模板分别对应着应用和家园风格，mobile目录的模板对应的是3G手机版，search目录里面是搜索页面模板，ranklist对应的是排行榜模板，tag目录中的是标签，group里面的是群组模板，home中的是家园模板，portal里面的是文章首页模板，这些对插件作者来说一般用不上，这里就不多叙述了。只说下面的目录，后面对文件被调用的场合进行说明
+default/member 下面有四个文件
+getpasswd.htm 密码取回
+login.htm 用户登录
+login_simple.htm 同上，但是功能简单点
+register.htm 用户注册
+default/common 下面的css我不做解释，因为对做插件的人来说基本用不上，有兴趣的请自行请教模板风格作者，同样对使用的场合进行说明
+block_forumtree.htm 论坛树形列表模块
+block_thread.htm 主题模块
+block_userinfo.htm 用户信息模块
+buyinvitecode.htm 邀请码购买
+css_sample.htm CSS样例
+editor.htm 编辑器
+editor_menu.htm 编辑器菜单按钮
+extcredits.htm 拓展积分列举
+faq.htm 使用帮助
+footer.htm 站点底部文件，一般的模板文件都要调用这个模板以正常显示底部信息
+footer_ajax.htm 同上
+header.htm 头部文件，一般的模板文件都要调用这个文件以正常显示头部信息
+header_ajax.htm 同上
+header_common.htm 同上
+header_diy.htm 同上
+invite.htm 邀请注册
+preview.htm 也来
+pubsearchform.htm 搜索
+report.htm 报告
+seccheck.htm 验证码检查
+seditor.htm 编辑器
+sendmail.htm 邮件发送页
+showmessage.htm 提示信息页面，在PHP程序中使用showmessage函数出来信息使用的模板就是
+这个
+simplesearchform.htm 搜索
+stat.htm 站点统计
+userabout 用户应用信息
+default/forum 一般论坛里面的PHP程序所调用的模板文件都是在这里(小提示，一般htm对应的php文件文件名都是有类似字符的，很好认的)
+activity_applist_more.htm 应用列表
+activity_applylist.htm 应用列表
+activity_export.htm 导出
+ajax_albumlist.htm 相册列表
+ajax_attachlist.htm 附件列表
+ajax_imagelist.htm 图片列表
+ajax_secondgroup.htm 拓展用户组
+ajax_threadlist.htm 主题列表
+announcement.htm 公告
+attachpay.htm 附件收费
+attachpay_view.htm 收费附件付费记录浏览
+comment.htm 点评
+comment_more.htm 同上
+debate_umpire.htm 辩论
+discuz.htm 论坛首页
+discuzcode.htm Discuz!代码
+editor_ajax.htm 编辑器
+editor_menu_forum.htm 论坛菜单
+forumdisplay.htm 主题列表浏览
+forumdisplay_fastpost.htm 快速回复框架
+forumdisplay_leftside.htm 主题列表浏览边栏
+forumdisplay_list.htm 主题列表
+forumdisplay_passwd.htm 论坛密码输入页面
+forumdisplay_subforum.htm 二级论坛框架
+index.htm 空文件，作用是防止列目录
+index_navbar.htm 头部导航栏
+modcp.htm 版主管理后台
+modcp_announcement.htm 版主管理后台公告发布
+modcp_forum.htm 版主管理后台论坛管理
+modcp_forumaccess.htm 版主管理后台论坛权限设置
+modcp_home.htm 版主管理后台主页
+modcp_log.htm 版主管理后台记录查看
+modcp_login.htm 版主管理后台登录页
+modcp_member.htm 版主管理后台用户管理
+modcp_moderate.htm 版主管理后台主题批量管理
+modcp_moderate_float.htm 版主管理后台主题管理浮动窗口
+modcp_post.htm 版主管理后台帖子管理
+modcp_recyclebin.htm 版主管理后台回收站
+modcp_recyclebinpost.htm 版主管理后台回收站帖子浏览页
+modcp_report.htm 版主管理后台用户报告管理
+modcp_thread.htm 版主管理后台主题管理
+pay.htm 收费主题
+pay_view.htm 收费主题付费记录查看
+post.htm 跟发帖有关的模板，这个是全局模板
+post_activity.htm 发表活动主题
+post_attachlimit.htm 附件限制信息页面
+post_debate.htm 发表辩论主义
+post_editor_attribute.htm 编辑器
+post_editor_body.htm 编辑器主题
+post_editor_extra.htm 编辑器附件功能
+post_editor_option.htm 编辑器
+post_forumselect.htm 发帖时论坛列表选择
+post_infloat.htm 浮动发帖页面
+post_poll.htm 投票主题发布页面 
+post_reward.htm 发表悬赏主题
+post_sortoption.htm 排序选项
+post_trade.htm 发表商品主题
+postappend.htm 以往帖子列表浏览
+rate.htm 用户评分
+rate_view.htm 评分记录
+recommend.htm 主题推荐
+relatekw.htm 标签生成页
+search_sortoption.htm 搜索
+stat_main.htm 站点统计首页
+stat_memberlist.htm 站点统计，用户统计
+stat_misc.htm 站点统计，例如像竞价、主题等等的统计
+stat_onlinetime.htm 站点统计，在线时间统计
+stat_team.htm 站点统计，管理团队
+stat_trade.htm 站点统计，交易统计
+tag.htm 标签
+topicadmin.htm 全局模板，配合下面的使用
+topicadmin_action.htm 浏览主题时选择主题管理操作的下拉列表项目
+topicadmin_getip.htm 帖子IP查看页
+topicadmin_modlayer.htm 管理主题时候，悬浮的带有置顶、移动、精华等常用操作的小浮窗
+trade.htm 商品主题全局模板
+trade_displayorder.htm 商品主题基本信息
+trade_info.htm 商品信息浏览
+trade_view.htm 商品交易记录浏览
+upload.htm 附件上传
+viewthread.htm 浏览的主题时调用的全局模板
+viewthread_activity.htm 浏览活动主题
+viewthread_debate.htm 浏览辩论主题
+viewthread_fastpost.htm 浏览主题时快速发帖的框子
+viewthread_from_node.htm 同viewthread_node.htm
+viewthread_mod.htm 浏览主题时的管理项
+viewthread_node.htm 浏览主题的时候显示的用户信息
+viewthread_node_body.htm 同上
+viewthread_pay.htm 浏览付费主题
+viewthread_poll.htm 浏览投票主题
+viewthread_poll_voter.htm 浏览投票主题的选项
+viewthread_portal.htm 浏览文章
+viewthread_printable.htm 浏览可打印版本
+viewthread_reward.htm 浏览悬赏主题
+viewthread_trade.htm 浏览商品主题
+warn_view.htm 浏览帖子警告记录
+不过前面都是打酱油的程序文件，真正的大牌现在才开始，返回根目录，看source目录把，主要执行具体功能的程序都在里面
+source下面的discuz_version.php是Discuz!版本标示文件，这个文件是对当前Discuz!版本进行识别，一般不动的。
+source下面的多个目录中，plugins目录是插件目录，如果你要用插件接口开发插件，一般文件都是放这个目录中的；language目录中是所有的语言包文件，里面的内容自己打开看就可以了；archiver目录中的是无图版的程序。这些一般是无关紧要的，这里就不浪费篇幅了。
+class目录中都是调用库的文件，对一般的插件作者来说，只需要掌握下面的几个目录里面的文件就可以了 。
+source\class\magic里面是所有的道具脚本文件，具体文件对应的道具功能到系统设置看就可以了
+source\class\task里面是所有的论坛任务脚本文件
+task_avatar.php 头像上传任务
+task_blog.php 日志任务
+task_connect_bind.php QQ互联任务
+task_email.php 邮箱验证任务
+task_friend.php 加好友的任务
+task_gift.php 红包类任务
+task_member.php 用户类任务
+task_post.php 发帖任务
+task_profile.php 完善用户信息的任务
+task_promotion.php 空间任务
+class\block\forum里面的文件是DIY论坛页面的时候，所用到的模块程序，这里的程序只管理数据的搜索方式而不管理数据的具体显示
+block_activity.php 论坛活动
+block_activitycity.php 论坛活动城市
+block_activitynew.php 最新活动
+block_forum.php 论坛
+block_thread.php 主题
+block_threaddigest.php 精华主题
+block_threadhot.php 最热主题
+block_threadnew.php 最新主题
+block_threadspecial.php 特殊主题展示
+block_threadspecified.php 分类主题展示
+block_threadstick.php 置顶主题展示
+block_trade.php 商品主题展示
+block_tradehot.php 最热商品主题展示
+block_tradenew.php 最新商品主题展示
+block_tradespecified.php 商品分类信息展示
+blockclass.php 只有几行的程序，用来显示论坛对应的名称，不作为单独的模块
+module目录中，对一般插件作者来说，掌握forum/home/group/member/misc这5个目录的程序文件含义就足够了，另外这些文件调用的模板与templates/default下面的目录结构和文件是对应的，这点非常好辨别，所以如果要修改对应的模板显示方式的话，去按照这个规则找htm文件改就可以了。
+source\module\forum 管理所有与论坛有关的程序
+forum_ajax.php  论坛ajax效果程序
+forum_announcement.php 论坛公告
+forum_attachment.php 论坛附件下载
+forum_forumdisplay.php 论坛主题列表
+forum_group.php 群组论坛
+forum_image.php 论坛图片
+forum_index.php 论坛首页
+forum_index_mobile.php 论坛首页——手机版
+forum_misc.php 杂项功能，例如像评分收藏什么都在这里
+forum_modcp.php 论坛版主管理
+forum_post.php 论坛帖子发表所用到的程序
+forum_redirect.php 帖子跳转，例如查看上一主题、下一主题就用到这个文件
+forum_relatekw.php 标签聚合
+forum_relatethread.php 相关主题显示
+forum_rss.php RSS调用
+forum_tag.php 标签浏览
+forum_topicadmin.php 主题浏览页面的主题管理
+forum_trade.php 商品交易
+forum_viewthread.php 浏览主题时的主程序
+source\module\group 管理所有和群组有关的程序
+group_attentiongroup.php 我关注的群组
+group_index.php 群组首页
+group_my.php 我的群组
+source\module\home 管理所有和家园有关的程序
+home_editor.php 家园编辑器
+home_invite.php 家园，邀请注册
+home_magic.php 家园，道具
+home_medal.php 家园，勋章
+home_misc.php 家园，杂项操作
+home_rss.php 家园RSS
+home_space.php 家园空间
+home_spacecp.php 家园空间后台管理
+home_task.php 家园，任务操作
+source\module\member 功能比较杂，下面详细说
+member_activate.php 用户激活
+member_clearcookies.php 信息清理
+member_connect.php QQ互联
+member_connect_logging.php 互联登录
+member_connect_register.php 互联注册
+member_emailverify.php Email验证
+member_getpasswd.php 获取密码
+member_logging.php 标准登录
+member_lostpasswd.php 找回密码
+member_register.php 用户注册
+member_regverify.php 注册验证
+member_switchstatus.php 状态切换，例如从隐身切换到非隐身
+source\module\misc 功能也比较杂，下面详细说
+misc_buyinvitecode.php 邀请码购买
+misc_diyhelp.php DIY帮助
+misc_error.php 错误提示页
+misc_faq.php 论坛自带的帮助
+misc_initsys.php 所有云服务功能在此
+misc_invite.php 邀请注册
+misc_manyou.php 漫游程序
+misc_mobile.php 手机版杂项功能
+misc_ranklist.php 排行榜页面
+misc_report.php 用户报告
+misc_seccode.php 验证码生成程序
+misc_secqaa.php 验证提问生成程序
+misc_stat.php 站点统计
+misc_swfupload.php 附件快速批量上传
+misc_tag.php 标签管理
+source\admincp下面的都是和系统站点设置相关的文件，下面的目录的文件不必掌握，只需要知道cloud是跟云服务有关的系统设置就可以了
+source\admincp\moderate是跟后台审核有关的程序，内容说明如下
+  moderate_article.php 文章审核
+  moderate_blog.php 日志审核
+  moderate_comment.php 评论审核
+  moderate_doing.php 动态审核
+  moderate_member.php 用户审核
+  moderate_picture.php 上传图片审核
+  moderate_portalcomment.php 门户评论审核
+  moderate_reply.php 回复审核
+  moderate_share.php 分享审核
+  moderate_thread.php 主题审核
+source\admincp
+admincp_addons.php 认证插件作者管理
+admincp_admingroup.php 管理组管理
+admincp_adv.php 广告管理
+admincp_album.php 相册管理
+admincp_albumcategory.php 相册分类管理
+admincp_announce.php 公告管理
+admincp_article.php 文章管理
+admincp_attach.php 附件管理
+admincp_block.php 模块管理
+admincp_blockstyle.php 模块风格
+admincp_blockxml.php 同上
+admincp_blog.php 日志管理
+admincp_blogcategory.php 日志分类管理
+admincp_card.php 卡密生成
+admincp_checktools.php 检查工具
+admincp_click.php 家园访问
+admincp_cloud.php 云服务
+admincp_comment.php 评论管理
+admincp_counter.php 论坛统计更新
+admincp_cpanel.php 调用库，调用一些函数
+admincp_credits.php 积分设置
+admincp_db.php 数据库管理
+admincp_district.php 分类信息模型
+admincp_diytemplate.php 模板DIY管理
+admincp_doing.php 后台设置搜索功能
+admincp_domain.php 导航栏管理
+admincp_ec.php 电子商务
+admincp_faq.php 论坛帮助管理
+admincp_feed.php 动态设置
+admincp_forums.php 论坛设置
+admincp_founder.php 创始人设置
+admincp_group.php 用户组设置
+admincp_index.php 后台首页
+admincp_login.php 后台登陆页面
+admincp_logs.php 系统记录查看
+admincp_magics.php 道具设置
+admincp_main.php 调用的模板，显示头部信息用途
+admincp_medals.php 勋章设置
+admincp_members.php 会员设置
+admincp_menu.php 系统设置中的菜单
+admincp_misc.php 杂项设置，在线列表，友情链接等等的
+admincp_moderate.php 审核管理，直接调用下面moderate目录的程序
+admincp_nav.php 系统设置中的导航栏
+admincp_perm.php 权限设置
+admincp_pic.php 上传图片管理
+admincp_plugins.php 插件管理
+admincp_portalcategory.php 门户文章分类管理
+admincp_postcomment.php 帖子点评管理
+admincp_postsplit.php 帖子批量管理
+admincp_profilefield.php 用户信息设置
+admincp_prune.php 过滤词语设置
+admincp_quickquery.php 快速SQL语句设置
+admincp_recyclebin.php 回收站管理
+admincp_recyclebinpost.php 回收站帖子管理
+admincp_report.php 报告管理
+admincp_search.php 搜索管理
+admincp_setting.php 系统全局设置
+admincp_share.php 分享设置
+admincp_smilies.php 表情设置
+admincp_specialuser.php 特殊用户设置
+admincp_styles.php 风格设置
+admincp_tag.php 标签管理
+admincp_tasks.php 任务管理
+admincp_templates.php 模板管理
+admincp_threads.php 主题管理
+admincp_threadsplit.php 主题批量管理
+admincp_threadtypes.php 主题分类
+admincp_tools.php 系统工具
+admincp_topic.php 主题批量管理，不是单独使用的
+admincp_tradelog.php 商品交易记录
+admincp_usergroups.php 用户组设置
+admincp_verify.php 用户验证管理
+discuzdb.md5 标准数据库校验文件数据文件
+discuzfiles.md5 标准程序文件校验文件数据文件，里面记录了标准文件的尺寸信息
+\source\function下面就全部都是函数文件了，这些文件真的很好用的，里面有很多强大的函数，调用这些文件就能用了。
+\source\function\cache里面的文件跟缓存文件生成有关，不必掌握。
+source\function 我把和这些函数有关的操作写出来
+  function_admincp.php 系统设置
+  function_attachment.php 附件操作
+  function_block.php 模块
+  function_blog.php 日志
+  function_cache.php 缓存
+  function_cloud.php 云服务
+  function_comment.php 评论
+  function_connect.php QQ互联
+  function_core.php 大量的核心函数在这里，相当于旧版本的global.func.php
+  function_credit.php 积分操作
+  function_delete.php 删除操作
+  function_discuzcode.php Discuz!代码
+  function_domain.php 导航栏
+  function_ec_credit.php 积分交易
+  function_editor.php 编辑器
+  function_exif.php 相片exif信息
+  function_feed.php 动态管理
+  function_filesock.php 远程文件
+  function_forum.php 论坛
+  function_forumlist.php 论坛列表
+  function_friend.php 好友
+  function_group.php 群组
+  function_grouplog.php 群组记录
+  function_home.php 家园
+  function_importdata.php 导出数据
+  function_magic.php 道具
+  function_mail.php 邮箱操作
+  function_manyou.php 漫游
+  function_member.php 用户
+  function_message.php 信息
+  function_misc.php 杂项函数
+  function_plugin.php 插件
+  function_portal.php 门户
+  function_portalcp.php 门户后天
+  function_post.php 帖子
+  function_profile.php 个人信息
+  function_search.php 搜索
+  function_seccode.php 验证码
+  function_share.php 分享
+  function_space.php 个人页面
+  function_spacecp.php 个人页面设置
+  function_stat.php 站点统计
+  function_sysmessage.php 系统信息
+    function_threadsort.php 主题排序
+    function_trade.php 商品交易
+    function_userapp.php 用户应用
+最后就是\source\include文件了，很多操作通过入口程序后，执行的具体代码都在这里。其中
+\source\include\cron里面全部是计划任务的脚本文件。重点介绍
+modcp\post\space\thread\topicadmin这5个目录里面的文件含义
+\source\include\modcp 版主后台程序都在这里
+modcp_announcement.php 公告
+modcp_forum.php 论坛标记
+modcp_forumaccess.php 论坛权限
+modcp_home.php 主页
+modcp_log.php 运行记录
+modcp_login.php 登录页面
+modcp_member.php 用户编辑
+modcp_moderate.php 审核
+modcp_noperm.php 无权限提示页面
+modcp_plugin.php 插件管理
+modcp_recyclebin.php 回收站
+modcp_recyclebinpost.php 回收站帖子
+modcp_report.php 用户报告
+modcp_thread.php 主题批量管理
+\source\include\post 帖子发表操作都在这里进行
+post_albumphoto.php 发表相册照片
+post_editpost.php 编辑帖子
+post_newreply.php 发新回复
+post_newthread.php 发新主题
+post_newtrade.php 发新商品主题
+post_threadsorts.php 主题分类信息
+\source\include\space 个人设置信息的操作都在这里进行
+space_activity.php 邮箱验证
+space_album.php 我的相册
+space_blog.php 我的日志
+space_debate.php 我的辩论
+space_doing.php 我的动作
+space_favorite.php 个人收藏
+space_friend.php 我的好友
+space_home.php 我的家园
+space_index.php 我的设置主页
+space_notice.php 个人提醒
+space_plugin.php 跟插件有关的设置
+space_pm.php 论坛内短信息
+space_poll.php 我的投票
+space_profile.php 我的个人信息
+space_reward.php 我的悬赏
+space_share.php 我的分享
+space_thread.php 我的主题
+space_trade.php 我的商品交易
+space_videophoto.php 视频验证
+space_wall.php 我的空间风格设置
+\source\include\space\thread 所有的特殊主题的操作都单独在这个文件夹中的文件中进行
+  thread_activity.php 活动主题
+  thread_debate.php 辩论主题
+  thread_pay.php 收费主题
+  thread_poll.php 投票主题
+  thread_printable.php 主题打印
+  thread_reward.php 悬赏主题
+  thread_trade.php 商品主题
+\source\include\space\topicadmin 记得在浏览主题的时候下拉的主题管理菜单吗？主要的管理操作
+代码都在这里的文件中
+topicadmin_banpost.php 屏蔽帖子
+topicadmin_copy.php 主题复制
+topicadmin_delcomment.php 删除评论
+topicadmin_delpost.php 删除帖子
+topicadmin_getip.php 查看发帖人的IP
+topicadmin_merge.php 合并主题
+topicadmin_moderate.php 主题推荐、精华、指定、移动等操作
+topicadmin_refund.php 强制退款
+topicadmin_removereward.php 取消悬赏
+topicadmin_repair.php 修复主题
+topicadmin_restore.php 同上
+topicadmin_split.php 主题分割
+topicadmin_stamp.php 主题鉴定
+topicadmin_stamplist.php 主题鉴定的标印列表
+topicadmin_stickreply.php 回复贴内指定
+topicadmin_warn.php 对某个帖子进行警告
