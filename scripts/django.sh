@@ -3,7 +3,6 @@ get_nginx(){
     for i in `elinks -dump https://nginx.org/download/ | awk '{print $2}' | grep "nginx-${nginx_version}.tar.gz$"`
     do
         download_url=$i
-        package_name=`echo $i | awk -F"/" '{print $NF}'`
         src_dir="nginx-$nginx_version"
     done
 
@@ -11,7 +10,7 @@ get_nginx(){
         echo "Nginx-${nginx_version}.The version does not exist, re-enter the correct version number"
         get_package
     }
-    [ -z `find $home_dir/package -name $package_name` ] &&  wget -q $download_url -P $home_dir/package && echo "nginx-${nginx_version}.tar.gz Download completed" || echo "nginx-${nginx_version}.tar.gz Already downloaded"
+    [ -z `find $home_dir/package -name nginx-${nginx_version}.tar.gz` ] &&  wget -q $download_url -P $home_dir/package && echo "nginx-${nginx_version}.tar.gz Download completed" || echo "nginx-${nginx_version}.tar.gz Already downloaded"
 }
 
 get_python(){
@@ -24,7 +23,7 @@ get_python(){
 }
 
 install_nginx(){
-    tar zxf $home_dir/package/$package_name -C $home_dir/src/
+    tar zxf $home_dir/package/nginx-${nginx_version}.tar.gz -C $home_dir/src/
     cd $home_dir/src/$src_dir
     grep "^www" /etc/group &> /dev/null
     [ $? -ne 0 ] && groupadd www
@@ -56,7 +55,7 @@ clear
         clear
         sh $0
     }
-    mkdir -p $home_dir/{package,src,nginx}
+    mkdir -p $home_dir/{package,src,nginx,python}
     read -p "Enter the version of nginx to be installed. Example 1.17.3 : " nginx_version
     [ $nginx_version ] || {
         echo "No version number entered. re-enter"
