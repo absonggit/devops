@@ -126,7 +126,7 @@ log.retention.check.interval.ms=300000
 #是否启用log压缩，一般不用启用，启用的话可以提高性能
 log.cleaner.enable=false
 #设置zookeeper的连接端口
-zookeeper.connect=192.168.1.224:2181,192.168.1.225:2181,192.168.1.226:1218
+zookeeper.connect=192.168.1.224:2181,192.168.1.225:2181,192.168.1.226:2181
 
 
 ---------------------------
