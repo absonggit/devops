@@ -1,4 +1,4 @@
-# Logstash 介绍 
+## Logstash 介绍 
 > Logstash 是开源的服务器端数据处理管道，能够同时从多个来源采集数据，转换数据，然后将数据发送到您最喜欢的“存储库”中。
 ## 下载安装
 > 官方提供了二进制压缩包、apt、yum、brew以及docker的多种安装方式。Logstash需要Java 8或Java 11。使用官方的Oracle发行版或开源发行版(如OpenJDK)。
@@ -113,3 +113,24 @@ if "test" not in [tags] {
 } else{
 }
 ```
+## 命令行参数
+1. -e
+  - 执行Logstash的参数，默认值是input{stdin{}}output{stdout{}}
+2. -f或--config
+  - 指定配置文件来运行Logstash进程
+3. -t或--configtest
+  - 测试Logstash配置文件语法是否能正常解析。
+4. -l或--log
+  - Logstash的日志，可以输出到指定文件中。
+5. -w或--pipeline-workers
+  - filter和output的pipeline线程数量，默认是CPU核数。
+6. -b或--pipeline-batch-size
+  - 每个pipeline线程，在执行具体的filter和output函数之前，最多累积日志的条数，默认125条。越大性能越好，JVM内存消耗也就越多。
+7. -u或--pipeline-batch-delay
+  - 每个pipeline线程，在打包批量日志时，最多等待几毫秒，默认是5ms
+8. -P或--pluginpath
+  - 加载插件
+9. --verbose
+  - 输出一定的调试日志
+10. --debug
+  - 输出更多的调试日志
