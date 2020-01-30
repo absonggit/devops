@@ -36,7 +36,7 @@ type=rpm-md
 sudo yum install logstash
 ```
 
-### 测试
+## 测试
 ```bash
 # 启动logstash进程
 bin/logstash -e 'input{stdin{}}output{stdout{codec=>rubydebug}}'
@@ -68,6 +68,5 @@ bin/logstash -f logstash.conf
 > Logstash会给事件添加一些额外信息：
 > - @timestamp 用来标记事件发生的时间
 > - host 标记事件发生在哪里
-> - type 标记事件的唯一类型
-> - tags 标记事件的属性。是一个数组，一个事件可以有多个标签。
->   - 每个Logstash过滤插件，有四个方法add_tag、remove_tag、add_field和remove_field，这些在插件过滤匹配成功时生效。
+> - message 标记事件的内容
+
