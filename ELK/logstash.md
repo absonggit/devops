@@ -161,6 +161,29 @@ input {
 }
 ```
 2. 文件输入
+```ruby
+# .sincedb 数据库文件，用来跟踪被监听日志文件的inode,major number,minor number和pos。
+input {
+    file {
+        path => ["/var/log/*.log"]      # 文件路径
+        type => "system"                # 标记事件类型
+        start_position => "beginning"   # 从文件起始,没有设置默认是从文件结尾
+        discover_interval => 15         # 间隔多久检查一次被监听路径下是否有新文件，默认15秒
+        exclude => ["/var/log/message"] # 排除指定文件的监听
+        sincedb_path => "~/.sincedb"    # sincedb数据库文件的位置，默认是用户家目录下
+        sincedb_write_interval => 15    # 每隔多久写一次sincedb文件，默认15秒
+        stat_interval => 1              # 间隔多久检查一次监听文件的状态（是否有更新），默认是1秒
+        close_older => 3600             # 监听中的文件，在设置的时间内没有更新内容，就关闭监听文件的句柄，默认3600秒
+        ignore_older => 86400           # 检查文件列表的时候，如果一个文件的最后修改时间超过这个值，就忽略这个文件，默认是86400秒
+    }
+}
+# 注意事项
+# 1) 如果导入原数据到Elasticsearch的话，还需要filter/date插件来修改默认的"@timestamp"字段值。
+# 2) filewatch只支持文件的绝对路径。
+# 3) 路径递归，仅支持/path/to/**/*.log，用**表示递归全部子目录。
+# 4) start_position仅在该文件从未被监听过的时候起作用。如果sincedb文件中已经有了该文件的inode记录，那么将会从这个pos开始读取数据。如果将sincedb_path定义为/dev/null,则每次重启自动从头开始读取数据。
+# 5) Windows平台上没有inode的概念，因此使用file监听文件是不靠谱的。推荐使用nxlog作为收集端。
+```
 3. TCP输入
 4. syslog输入
 5. http_poller抓取
