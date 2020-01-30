@@ -70,3 +70,13 @@ bin/logstash -f logstash.conf
 > - host 标记事件发生在哪里
 > - message 标记事件的内容
 
+## 配置语法
+1. 区域
+Logstash用{}来定义区域。区域内可以包括插件区域定义，一个区域内可以定义多个插件。插件区域内定义键值对设置。
+```ruby
+input {
+    stdin {}
+    syslog {}
+}
+```
+2. 数据类型
