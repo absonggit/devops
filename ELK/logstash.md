@@ -246,7 +246,7 @@ Logstash执行流程是`input | decode | filter | encode | output`的数据流�
 为降低logstash过滤器的CPU负载消耗，会将日志定义为JSON格式。
 ngixn为例：
 ```bash
-logformat json '{"@timestamp":"$time_iso8601",'
+log_format json '{"@timestamp":"$time_iso8601",'
                '"@version":"1",'
                '"host":"$server_addr",'
                '"client":"$remote_addr",'
@@ -266,7 +266,20 @@ input {
     }
 }
 ```
-
+```json
+{
+            "size" => 5,
+          "domain" => "127.0.0.1",
+      "@timestamp" => 2020-01-13T12:28:16.000Z,
+          "status" => "200",
+        "@version" => "1",
+          "client" => "127.0.0.1",
+             "url" => "/index.html",
+            "path" => "/var/log/nginx/access.log_json",
+            "host" => "127.0.0.1",
+    "responsetime" => 0.0
+}
+```
 2. 多行事件编码
 3. 网络流编码
 4. collectd输入
