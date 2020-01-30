@@ -49,7 +49,7 @@ bin/logstash -e 'input{stdin{}}output{stdout{codec=>rubydebug}}'
           "host" => "localhost.localdomain"
 }
 
-# 命令行的方式只做调试使用，一般采用logstash.conf配置文件的方式启动logstash。实例：
+# 命令行的方式不是很方便，一般采用logstash.conf配置文件的方式启动logstash。实例：
 input {
     stdin {}
 }
@@ -62,3 +62,12 @@ output {
 # 指定配置文件启动logstash
 bin/logstash -f logstash.conf
 ```
+### 解释
+> Logstash像管道一样，**输入**（就像cat命令）数据，然后处理**过滤**（就像awk之类的命令）数据，最后**输出**（就像tee命令）到其他地方。
+> Logstash使用不同的线程来实现的。 **输入**是<xx；过滤是|xx；输出>xx。数据在线程之间以**事件**的形式流传。
+> Logstash会给事件添加一些额外信息：
+> - @timestamp 用来标记事件发生的时间
+> - host 标记事件发生在哪里
+> - type 标记事件的唯一类型
+> - tags 标记事件的属性。是一个数组，一个事件可以有多个标签。
+>   - 每个Logstash过滤插件，有四个方法add_tag、remove_tag、add_field和remove_field，这些在插件过滤匹配成功时生效。
