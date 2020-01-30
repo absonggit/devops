@@ -134,3 +134,27 @@ if "test" not in [tags] {
  > - 输出一定的调试日志
 10. --debug
  > - 输出更多的调试日志
+ ## 插件安装
+```bash
+bin/logstash-plugin --help
+Usage:
+    bin/logstash-plugin [OPTIONS] SUBCOMMAND [ARG] ...
+
+Parameters:
+    SUBCOMMAND                    subcommand
+    [ARG] ...                     subcommand arguments
+
+Subcommands:
+    list                          List all installed Logstash plugins
+    install                       Install a Logstash plugin
+    remove                        Remove a Logstash plugin
+    update                        Update a plugin
+    pack                          Package currently installed plugins, Deprecated: Please use prepare-offline-pack instead
+    unpack                        Unpack packaged plugins, Deprecated: Please use prepare-offline-pack instead
+    generate                      Create the foundation for a new plugin
+    uninstall                     Uninstall a plugin. Deprecated: Please use remove instead
+    prepare-offline-pack          Create an archive of specified plugins to use for offline installation
+
+Options:
+    -h, --help                    print help
+```
