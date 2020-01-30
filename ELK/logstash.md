@@ -101,12 +101,13 @@ Logstash支持变量内插，在字符串里使用字段引用
 "the longitude is %{[geoip][location][0]}"
 4. 条件判断
 操作符：
+``` ruby
   - ==, !=, <, >, <=, >=
   - =~, !~
   - in, not in
   - and, or ,nand, xor
   - !()
-```ruby
+  
 if "test" not in [tags] {
 } else if [status] !~ /^2\d\d and [url] == "/noc.gif" {
 } else{
