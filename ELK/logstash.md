@@ -80,3 +80,35 @@ input {
 }
 ```
 2. 数据类型
+Logstash支持的数据类型：
+    - bool
+      - debug => true
+    - string
+      - host => "hostname"
+    - number
+      - port => 514
+    - array
+      - match => ["datetime", "UNIX", "ISO8601"]
+    - hash
+      options => {
+          key1 => "value1",
+          key1 => "value1"
+      }
+3. 字段引用
+在Logstash配置中使用字段的值，只需把字段的名字写在中括号[]里就行了，对于嵌套字段，只要把每层的字段名写在[]里就可以了。
+[geoip][location][0]
+Logstash支持变量内插，在字符串里使用字段引用
+"the longitude is %{[geoip][location][0]}"
+4. 条件判断
+操作符：
+  - ==, !=, <, >, <=, >=
+  - =~, !~
+  - in, not in
+  - and, or ,nand, xor
+  - !()
+```ruby
+if "test" not in [tags] {
+} else if [status] !~ /^2\d\d and [url] == "/noc.gif" {
+} else{
+}
+```
