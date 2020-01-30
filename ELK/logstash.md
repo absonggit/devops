@@ -134,27 +134,49 @@ if "test" not in [tags] {
  > - 输出一定的调试日志
 10. --debug
  > - 输出更多的调试日志
- ## 插件安装
+## 插件管理
 ```bash
 bin/logstash-plugin --help
-Usage:
-    bin/logstash-plugin [OPTIONS] SUBCOMMAND [ARG] ...
+用法:
+    bin/logstash-plugin [选项] 子命令 [参数] ...
 
-Parameters:
-    SUBCOMMAND                    subcommand
-    [ARG] ...                     subcommand arguments
-
-Subcommands:
-    list                          List all installed Logstash plugins
-    install                       Install a Logstash plugin
-    remove                        Remove a Logstash plugin
-    update                        Update a plugin
-    pack                          Package currently installed plugins, Deprecated: Please use prepare-offline-pack instead
-    unpack                        Unpack packaged plugins, Deprecated: Please use prepare-offline-pack instead
-    generate                      Create the foundation for a new plugin
-    uninstall                     Uninstall a plugin. Deprecated: Please use remove instead
-    prepare-offline-pack          Create an archive of specified plugins to use for offline installation
-
-Options:
-    -h, --help                    print help
+子命令:
+    list                          列出所有安装的Logstash插件
+    install                       安装Logstash插件
+    remove                        删除Logstash插件
+    update                        更新一个插件
+    prepare-offline-pack          创建用于离线安装的指定插件的存档
 ```
+### 输入插件
+1. 标准输入
+2. 文件输入
+3. TCP输入
+4. syslog输入
+5. http_poller抓取
+### 编解码配置
+1. JSON编解码
+2. 多行事件编码
+3. 网络流编码
+4. collectd输入
+### 过滤器配置
+1. date时间处理
+2. grok正则捕获
+3. dissect解析
+4. GeoIP地址查询
+5. JSON编解码
+6. key-value切分
+7. metrics数值统计
+8. mutate数据修改
+9. Ruby处理
+10. split拆分事件
+11. 交叉日志合并
+### 输出插件
+1. 输出到Elasticsearch
+2. 发送Email
+3. 调用系统命令执行
+4. 保存成文件
+5. 报警发送到Nagios
+6. stasd
+7. 标准输出stdout
+8. TCP发送数据
+9. 输出到HDFS
