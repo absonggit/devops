@@ -265,6 +265,12 @@ input {
         codec => "json"
     }
 }
+output {
+    stdout {
+        codec => rubydebug {}
+    }
+}
+
 # logstash输出如下
 {
             "size" => 5,
@@ -278,6 +284,9 @@ input {
             "host" => "127.0.0.1",
     "responsetime" => 0.0
 }
+
+# 如果nginx作为代理服务器，有些变量可能不会一直是数字，比如$upstream_response_time,可能是“-”字符串，这样会导致数据输入验证报异常。
+# 日志格式统一记录为字符串格式即可，然后再用filter/mutate插件来变更相关字段的值类型即可。
 ```
 2. 多行事件编码
 3. 网络流编码
