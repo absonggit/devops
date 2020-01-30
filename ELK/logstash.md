@@ -241,7 +241,32 @@ input {
 # 每60秒获得一次数据，并重置计数。
 ```
 ### 编解码配置
+Logstash执行流程是`input | decode | filter | encode | output`的数据流。
 1. JSON编解码
+为降低logstash过滤器的CPU负载消耗，会将日志定义为JSON格式。
+ngixn为例：
+```bash
+logformat json '{"@timestamp":"$time_iso8601",'
+               '"@version":"1",'
+               '"host":"$server_addr",'
+               '"client":"$remote_addr",'
+               '"size":$body_bytes_sent,'
+               '"responsetime":$request_time,'
+               '"domain":"$host",'
+               '"url":"$uri",'
+               '"status":"$status"}';
+access_log /var/log/nginx/access.log_json json;
+#注意，$body_bytes_sent和$request_time是数值类型，因此没有双引号。
+```
+```ruby
+input {
+    file {
+        path => "/var/log/nginx/access.log_json"
+        codec => "json"
+    }
+}
+```
+
 2. 多行事件编码
 3. 网络流编码
 4. collectd输入
