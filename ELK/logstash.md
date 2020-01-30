@@ -102,11 +102,11 @@ Logstash支持变量内插，在字符串里使用字段引用
 4. 条件判断
 操作符：
 ``` ruby
-  - ==, !=, <, >, <=, >=
-  - =~, !~
-  - in, not in
-  - and, or ,nand, xor
-  - !()
+  # ==, !=, <, >, <=, >=
+  # =~, !~
+  # in, not in
+  # and, or ,nand, xor
+  # !()
   
 if "test" not in [tags] {
 } else if [status] !~ /^2\d\d and [url] == "/noc.gif" {
