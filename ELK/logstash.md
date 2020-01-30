@@ -265,8 +265,7 @@ input {
         codec => "json"
     }
 }
-```
-```json
+# logstash输出如下
 {
             "size" => 5,
           "domain" => "127.0.0.1",
