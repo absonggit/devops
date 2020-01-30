@@ -185,8 +185,61 @@ input {
 # 5) Windows平台上没有inode的概念，因此使用file监听文件是不靠谱的。推荐使用nxlog作为收集端。
 ```
 3. TCP输入
+```ruby
+input {
+    tcp {
+        port => 8888
+        mode => "server"
+        ssl_enable => false
+    }
+}
+# 配合nc命令导入数据
+nc 127.0.0.1 8888 < olddata
+```
 4. syslog输入
+```ruby
+# 把logstash配置成一个syslog服务器来接收数据，建议走TCP协议来传输数据
+input {
+    syslog {
+        port => "514"
+    }
+}
+```
 5. http_poller抓取
+```ruby
+input {
+    http_poller {
+        urls => {
+            0 => {
+                method => get
+                url => "http://localhost:80/status/format/json"
+                headers => {
+                    Accept => "application/json"
+                }
+                auth => {
+                    user => "user"
+                    password => "password"
+                }
+            }
+            1 => {
+            method => get
+                url => "http://localhost:81/status/format/json"
+                headers => {
+                    Accept => "application/json"
+                }
+                auth => {
+                    user => "user"
+                    password => "password"
+                }
+            }
+        }
+    request_timeout => 60
+    interval => 60
+    codec => "json"
+    }
+}
+# 每60秒获得一次数据，并重置计数。
+```
 ### 编解码配置
 1. JSON编解码
 2. 多行事件编码
