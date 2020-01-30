@@ -149,6 +149,17 @@ bin/logstash-plugin --help
 ```
 ### 输入插件
 1. 标准输入
+```ruby
+# 标准输入
+input {
+    stdin {
+        add_field => {}  # 增加字段
+        codec => "plain" # 无格式
+        tags => ["add"]  # 打标签，方便插件进行数据处理
+        type => "std"    # 标记事件类型
+    }
+}
+```
 2. 文件输入
 3. TCP输入
 4. syslog输入
