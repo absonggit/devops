@@ -4,7 +4,8 @@
 ## 下载安装
 > 官方提供了二进制压缩包、apt、yum、brew以及docker的多种安装方式。Logstash需要Java 8或Java 11。使用官方的Oracle发行版或开源发行版(如OpenJDK)。
 > 建议使用官方提供的仓库来安装
-### Debian平台
+<details>
+<summary>Debian平台</summary>
 ```bash
 # 下载及安装公开签署密匙
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
@@ -18,9 +19,10 @@ echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee 
 # 更新存储库并安装logstash
 sudo apt-get update && sudo apt-get install logstash
 ```
+</details>
 
 <details>
-<summary>### Redhat平台</summary>
+<summary>Redhat平台</summary>
        
 ```bash
 # 下载及安装公开签署密匙
