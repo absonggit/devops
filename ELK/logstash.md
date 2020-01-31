@@ -18,9 +18,10 @@ echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee 
 # 更新存储库并安装logstash
 sudo apt-get update && sudo apt-get install logstash
 ```
-### Redhat平台
+
 <details>
-<summary>Redhat平台</summary>
+<summary>### Redhat平台</summary>
+       
 ```bash
 # 下载及安装公开签署密匙
 rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
@@ -38,7 +39,7 @@ type=rpm-md
 # 安装logstash
 sudo yum install logstash
 ```
-<details>
+</details>
 
 ## 测试
 ```bash
