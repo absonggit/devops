@@ -155,7 +155,10 @@ bin/logstash-plugin --help
     update                        更新一个插件
     prepare-offline-pack          创建用于离线安装的指定插件的存档
 ```
-### 输入插件
+ 
+<details>
+### <summary>输入插件</summary>
+       
 1. 标准输入
 ```ruby
 # 标准输入
@@ -248,6 +251,7 @@ input {
 }
 # 每60秒获得一次数据，并重置计数。
 ```
+</details>
 ### 编解码配置
 Logstash执行流程是`input | decode | filter | encode | output`的数据流。
 1. JSON编解码
