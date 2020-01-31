@@ -253,7 +253,9 @@ input {
 ```
 </details>
 
-### 编解码配置
+<details>
+<summary>编解码配置</summary>
+
 Logstash执行流程是`input | decode | filter | encode | output`的数据流。
 1. JSON编解码
 为降低logstash过滤器的CPU负载消耗，会将日志定义为JSON格式。
@@ -305,7 +307,12 @@ output {
 
 3. 网络流编码
 4. collectd输入
-### 过滤器配置
+
+</details>
+
+<details>
+<summary>过滤器配置</summary>
+
 1. date时间处理
 2. grok正则捕获
 3. dissect解析
@@ -317,7 +324,12 @@ output {
 9. Ruby处理
 10. split拆分事件
 11. 交叉日志合并
-### 输出插件
+
+</details>
+       
+<details>
+<summary>输出插件</summary>       
+
 1. 输出到Elasticsearch
 2. 发送Email
 3. 调用系统命令执行
@@ -327,3 +339,5 @@ output {
 7. 标准输出stdout
 8. TCP发送数据
 9. 输出到HDFS
+
+</details>
