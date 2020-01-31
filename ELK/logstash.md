@@ -44,7 +44,9 @@ sudo yum install logstash
 ```
 </details>
 
-## 测试
+<details>
+<summary>测试</summary>
+
 ```bash
 # 启动logstash进程
 bin/logstash -e 'input{stdin{}}output{stdout{codec=>rubydebug}}'
@@ -78,7 +80,11 @@ bin/logstash -f logstash.conf
 > - host 标记事件发生在哪里
 > - message 标记事件的内容
 
-## 配置语法
+</details>
+
+<details>
+<summary>配置语法</summary>
+
 1. 区域
 Logstash用{}来定义区域。区域内可以包括插件区域定义，一个区域内可以定义多个插件。插件区域内定义键值对设置。
 ```ruby
@@ -121,7 +127,12 @@ if "test" not in [tags] {
 } else{
 }
 ```
-## 命令行参数
+
+</details>
+       
+<details>
+<summary>命令行参数</summary>
+
 1. -e
  > - 执行Logstash的参数，默认值是input{stdin{}}output{stdout{}}
 2. -f或--config
@@ -142,6 +153,9 @@ if "test" not in [tags] {
  > - 输出一定的调试日志
 10. --debug
  > - 输出更多的调试日志
+ 
+</details> 
+ 
 ## 插件管理
 ```bash
 bin/logstash-plugin --help
