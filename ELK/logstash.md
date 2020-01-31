@@ -157,7 +157,7 @@ bin/logstash-plugin --help
 ```
  
 <details>
-### <summary>输入插件</summary>
+<summary>输入插件</summary>
        
 1. 标准输入
 ```ruby
@@ -252,6 +252,7 @@ input {
 # 每60秒获得一次数据，并重置计数。
 ```
 </details>
+
 ### 编解码配置
 Logstash执行流程是`input | decode | filter | encode | output`的数据流。
 1. JSON编解码
