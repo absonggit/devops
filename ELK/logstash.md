@@ -6,6 +6,7 @@
 > 建议使用官方提供的仓库来安装
 <details>
 <summary>Debian平台</summary>
+       
 ```bash
 # 下载及安装公开签署密匙
 wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
