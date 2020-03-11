@@ -22,7 +22,6 @@
 ----
 
 #### Yum配置
-- [返回目录 :leftwards_arrow_with_hook:](#目录)
 
 <details>
 <summary>Yum配置</summary>
