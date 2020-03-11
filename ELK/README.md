@@ -77,6 +77,9 @@ yum install java-1.8.0-openjdk -y
 #### 系统配置
 - [返回目录 :leftwards_arrow_with_hook:](#目录)
 
+<details>
+<summary>系统配置</summary>
+ 
 ```shell
 vim /etc/security/limits.conf
 * hard nofile 65536
@@ -96,6 +99,8 @@ sysctl -p
 swapoff -a
 ```
 
+</details>
+ 
 ----
 
 #### Kafka&ZK集群部署
@@ -178,7 +183,6 @@ java     31778 root  146u  IPv6 8517806      0t0  TCP elk1.stack:57336->elk2.sta
 java     31778 root  202u  IPv6 8511093      0t0  TCP elk1.stack:XmlIpcRegSvc->58.82.247.197:52590 (ESTABLISHED)
 java     31778 root  203u  IPv6 8518953      0t0  TCP elk1.stack:XmlIpcRegSvc->elk1.stack:41220 (ESTABLISHED)
 ```
-##### kafka配置详解
 
 <details>
 <summary>kafka配置详解</summary>
