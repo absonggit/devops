@@ -179,6 +179,10 @@ java     31778 root  202u  IPv6 8511093      0t0  TCP elk1.stack:XmlIpcRegSvc->5
 java     31778 root  203u  IPv6 8518953      0t0  TCP elk1.stack:XmlIpcRegSvc->elk1.stack:41220 (ESTABLISHED)
 ```
 ##### kafka配置详解
+
+<details>
+<summary>kafka配置详解</summary>
+ 
 ```ini
 #当前机器在集群中的唯一标识，和zookeeper的myid性质一样
 broker.id=1
@@ -217,6 +221,9 @@ log.cleaner.enable=false
 #设置zookeeper的连接端口
 zookeeper.connect=192.168.1.224:2181,192.168.1.225:2181,192.168.1.226:2181
 ```
+
+</details>
+
 ----
 
 #### Elasticsearch安装与配置
