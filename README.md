@@ -1,4 +1,4 @@
-# 目录 :smile:
+# 目录 :bowtie:
 - [ELK](ELK/README.md)
 - [ansible](./ansible)
 - [docker](./docker)
