@@ -1,0 +1,16 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+  - name: Download the LNMP installation script and extract it.
+    unarchive:
+      src: http://soft.vpser.net/lnmp/lnmp1.6.tar.gz
+      dest: "{{ home_dir }}"
+      remote_src: yes
+    become: yes
+  - name: Perform the installation of LNMP
+    shell: cd {{ home_dir }}/lnmp1.6 && LNMP_Auto="y" DBSelect="{{ db_version }}" DB_Root_Password="{{ root_password }}" InstallInnodb="{{ innodb }}" PHPSelect="{{ php_version }}" SelectMalloc="{{ malloc }}" ./install.sh lnmp
+    become: yes
+  - name: View installation status
+    shell: lnmp status
+    become: yes
