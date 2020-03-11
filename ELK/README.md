@@ -1,4 +1,4 @@
-[:house: 主页](readme.md) 
+[:house: 主页](../README.md) 
  
 ### 目录 
 - [节点说明](#节点说明)
