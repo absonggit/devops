@@ -1,5 +1,5 @@
 ---
-- hosts: service-cluster1
+- hosts: all
   remote_user: root
   vars:
     tomcat_path: /data/WebServer/service
