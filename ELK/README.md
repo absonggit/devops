@@ -12,7 +12,6 @@
 ----
 
 #### 节点说明
-- [返回目录 :leftwards_arrow_with_hook:](#目录)
 
  | 内网IP        | HOSTNAME          | SOFTWARE                |
  | ------------- | ----------------- | ----------------------- |
@@ -77,10 +76,11 @@ yum install java-1.8.0-openjdk -y
 
 </details>
 
+- [返回目录 :leftwards_arrow_with_hook:](#目录)
+
 ----
 
 #### 系统配置
-- [返回目录 :leftwards_arrow_with_hook:](#目录)
 
 <details>
 <summary>系统配置</summary>
@@ -106,10 +106,11 @@ swapoff -a
 
 </details>
  
+- [返回目录 :leftwards_arrow_with_hook:](#目录)
+ 
 ----
 
 #### Kafka&ZK集群部署
-- [返回目录 :leftwards_arrow_with_hook:](#目录)
 
 <details>
 <summary>安装配置zookeeper集群</summary>
@@ -146,6 +147,8 @@ java    2017 root   23u  IPv6  22946      0t0  TCP *:eforward (LISTEN)
 ```
 
 </details>
+
+- [返回目录 :leftwards_arrow_with_hook:](#目录)
 
 <details>
 <summary>安装配置kafka集群</summary>
@@ -242,7 +245,6 @@ zookeeper.connect=192.168.1.224:2181,192.168.1.225:2181,192.168.1.226:2181
 ----
 
 #### Elasticsearch安装与配置
-- [返回目录 :leftwards_arrow_with_hook:](#目录)
 
 <details>
 <summary>安装elasticsearch</summary>
@@ -319,10 +321,11 @@ curl 192.168.1.58:9200/_cat/health
 
 </details>
 
+- [返回目录 :leftwards_arrow_with_hook:](#目录)
+
 ----
 
 #### Kibana安装配置
-- [返回目录 :leftwards_arrow_with_hook:](#目录)
 
 <details>
 <summary>安装elasticsearch</summary>
@@ -349,10 +352,11 @@ systemctl start kibana.service
 
 </details>
 
+- [返回目录 :leftwards_arrow_with_hook:](#目录)
+
 ----
 
 #### X-pack白金许可证破解
-- [返回目录 :leftwards_arrow_with_hook:](#目录)
 
 **ES配置**
 
@@ -442,3 +446,5 @@ systemctl restart kibana
 **成功登录后，查看证书状态**
 
 ![image-20200218165816837](./image/image-20200218165816837.png)
+
+- [返回目录 :leftwards_arrow_with_hook:](#目录)
