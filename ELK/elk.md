@@ -14,11 +14,11 @@
 #### 节点说明
 - [返回目录 :leftwards_arrow_with_hook:](#目录)
 
-| 外网IP         | 内网IP        | HOSTNAME          | SOFTWARE                |
-| -------------- | ------------- | ----------------- | ----------------------- |
-| 202.60.235.156 | 192.168.1.27  | elk1.stack kafka1 | ES、kafka、zk           |
-| 58.82.246.211  | 192.168.1.112 | elk2.stack kafka2 | ES、logstash、kafka、zk |
-| 103.41.126.138 | 192.168.1.58  | elk3.stack kafka3 | ES、kibana、kafka、zk   |
+ | 内网IP        | HOSTNAME          | SOFTWARE                |
+ | ------------- | ----------------- | ----------------------- |
+ | 192.168.1.27  | elk1.stack kafka1 | ES、kafka、zk           |
+ | 192.168.1.112 | elk2.stack kafka2 | ES、logstash、kafka、zk |
+ | 192.168.1.58  | elk3.stack kafka3 | ES、kibana、kafka、zk   |
 
 ----
 
