@@ -104,9 +104,9 @@ sysctl -p
 swapoff -a
 ```
 
-</details>
- 
 - [返回目录 :leftwards_arrow_with_hook:](#目录)
+
+</details>
  
 ----
 
@@ -145,10 +145,9 @@ lsof -i:2181
 COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
 java    2017 root   23u  IPv6  22946      0t0  TCP *:eforward (LISTEN)
 ```
+- [返回目录 :leftwards_arrow_with_hook:](#目录)
 
 </details>
-
-- [返回目录 :leftwards_arrow_with_hook:](#目录)
 
 <details>
 <summary>安装配置kafka集群</summary>
@@ -240,6 +239,8 @@ log.cleaner.enable=false
 zookeeper.connect=192.168.1.224:2181,192.168.1.225:2181,192.168.1.226:2181
 ```
 
+- [返回目录 :leftwards_arrow_with_hook:](#目录)
+
 </details>
 
 ----
@@ -319,9 +320,9 @@ curl 192.168.1.58:9200/_cat/health
 ```
 返回```green```表示集群正常
 
-</details>
-
 - [返回目录 :leftwards_arrow_with_hook:](#目录)
+
+</details>
 
 ----
 
@@ -350,9 +351,9 @@ i18n.locale: "zh-CN"
 systemctl start kibana.service
 ```
 
-</details>
-
 - [返回目录 :leftwards_arrow_with_hook:](#目录)
+
+</details>
 
 ----
 
@@ -450,6 +451,8 @@ systemctl restart kibana
 
 ![image-20200218165816837](./image/image-20200218165816837.png)
 
+- [返回目录 :leftwards_arrow_with_hook:](#目录)
+
 </details>
 
-- [返回目录 :leftwards_arrow_with_hook:](#目录)
+
