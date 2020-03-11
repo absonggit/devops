@@ -72,10 +72,11 @@ yum update -y
 ```shell
 yum install java-1.8.0-openjdk -y
 ```
+- [返回目录 :leftwards_arrow_with_hook:](#目录)
 
 </details>
 
-- [返回目录 :leftwards_arrow_with_hook:](#目录)
+
 
 ----
 
