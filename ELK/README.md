@@ -111,7 +111,8 @@ swapoff -a
 #### Kafka&ZK集群部署
 - [返回目录 :leftwards_arrow_with_hook:](#目录)
 
-**安装配置zookeeper集群**
+<details>
+<summary>安装配置zookeeper集群</summary>
 
 ```shell
 # 安装zk
@@ -144,7 +145,11 @@ COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
 java    2017 root   23u  IPv6  22946      0t0  TCP *:eforward (LISTEN)
 ```
 
-**安装配置kafka集群**
+</details>
+
+<details>
+<summary>安装配置kafka集群</summary>
+ 
 ```shell
 #下载安装
 cd /opt
@@ -188,6 +193,7 @@ java     31778 root  146u  IPv6 8517806      0t0  TCP elk1.stack:57336->elk2.sta
 java     31778 root  202u  IPv6 8511093      0t0  TCP elk1.stack:XmlIpcRegSvc->58.82.247.197:52590 (ESTABLISHED)
 java     31778 root  203u  IPv6 8518953      0t0  TCP elk1.stack:XmlIpcRegSvc->elk1.stack:41220 (ESTABLISHED)
 ```
+</details>
 
 <details>
 <summary>kafka配置详解</summary>
