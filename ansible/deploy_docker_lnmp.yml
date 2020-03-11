@@ -1,0 +1,12 @@
+---
+- hosts: "{{ host_ip }}"
+  gather_facts: no
+  tasks:
+  - name: pull git
+    git:  repo=https://github.com/absonggit/lnmp.git dest={{ dest_path }} force=yes
+
+  - name: update configure
+    lineinfile: dest={{ dest_path }}/.env regexp=lnmp line=HOME_DIR={{ dest_path }}
+
+  - name: build image and deployment servers
+    raw: cd "{{ dest_path }}" && docker-compose up -d
