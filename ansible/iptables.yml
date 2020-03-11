@@ -1,0 +1,15 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+  - name: blackIP
+    iptables:
+      chain: INPUT
+      source: "{{ IP }}"
+      jump: DROP
+      state: "{{ state }}"
+      comment: create by awx
+    become: yes
+  - name: iptables input list
+    shell: iptables -L INPUT
+    become: yes
