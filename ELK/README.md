@@ -25,6 +25,9 @@
 #### Yum配置
 - [返回目录 :leftwards_arrow_with_hook:](#目录)
 
+<details>
+<summary>Yum配置</summary>
+ 
 **elk-stack** yum文件: **elk.repo**
 
 ```ini
@@ -71,6 +74,8 @@ yum update -y
 ```shell
 yum install java-1.8.0-openjdk -y
 ```
+
+</details>
 
 ----
 
