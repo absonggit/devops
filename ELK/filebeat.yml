@@ -1,0 +1,48 @@
+filebeat.inputs:
+- type: log
+  # 开启日志监听
+  enabled: true
+  # 日志路径
+  paths:
+    - /home/wwwroot/test1/*/*.log
+  tags: ["test1"]
+  multiline.pattern: '^#'
+  multiline.negate: true
+  multiline.match: before
+  
+- type: log
+  enabled: true
+  paths:
+    - /home/wwwroot/test2/*/*.log
+  tags: ["test2"]
+  multiline.pattern: '^#'
+  multiline.negate: true
+  multiline.match: after
+
+- type: log
+  enabled: true
+  paths:
+    - /home/wwwroot/test3/*/*.log
+  tags: ["test3"]
+
+processors:
+# 过滤掉一些不要的日志字段，减少日志的数据大小
+- drop_fields:
+    fields: ["agent","input","ecs"]
+- add_fields:
+    fields:
+      host_tag: 'test'
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+output.kafka:
+# 将日志传递给kafka集群
+  hosts: ["kafka1:9092", "kafka2:9092", "kafka3:9092"]
+# kafka topic
+  topic: 'test'
+  partition.round_robin:
+    reachable_only: false
+  required_acks: 1
+  compression: gzip
+  max_message_bytes: 1000000
