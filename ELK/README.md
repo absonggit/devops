@@ -358,7 +358,7 @@ systemctl start kibana.service
 #### X-pack白金许可证破解
 
 <details>
-<summary>#### X-pack白金许可证破解</summary>
+<summary>X-pack白金许可证破解</summary>
  
 **ES配置**
 
