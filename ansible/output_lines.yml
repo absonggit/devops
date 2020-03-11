@@ -1,0 +1,8 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+    - name: test
+      shell: ps
+      register: result
+    - debug: var=result.stdout_lines
