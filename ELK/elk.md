@@ -144,7 +144,7 @@ tar xvf kafka_2.12-2.4.0.tgz && mv kafka_2.12-2.4.0 kafka && cd kafka
 # 修改配置
 vim config/server.properties
 broker.id=1  # 节点间的数字不一样即可
-listeners=PLAINTEXT://202.60.235.156:9092 # IP为本机IP
+listeners=PLAINTEXT://192.168.1.27:9092 # IP为本机IP
 num.network.threads=3
 num.io.threads=8
 socket.send.buffer.bytes=102400
