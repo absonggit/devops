@@ -244,7 +244,8 @@ zookeeper.connect=192.168.1.224:2181,192.168.1.225:2181,192.168.1.226:2181
 #### Elasticsearch安装与配置
 - [返回目录 :leftwards_arrow_with_hook:](#目录)
 
-**安装elasticsearch**
+<details>
+<summary>安装elasticsearch</summary>
 
 ```shell
 yum install elasticsearch -y
@@ -316,11 +317,16 @@ curl 192.168.1.58:9200/_cat/health
 ```
 返回```green```表示集群正常
 
+</details>
+
 ----
 
 #### Kibana安装配置
 - [返回目录 :leftwards_arrow_with_hook:](#目录)
 
+<details>
+<summary>安装elasticsearch</summary>
+ 
 ```shell
 # 安装kibana
 yum install kibana -y
@@ -340,6 +346,8 @@ i18n.locale: "zh-CN"
 # 启动
 systemctl start kibana.service
 ```
+
+</details>
 
 ----
 
