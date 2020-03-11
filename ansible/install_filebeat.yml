@@ -1,0 +1,14 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+  - name: Install filebeat
+    yum: 
+      name: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-{{ version }}-x86_64.rpm
+      state: present
+    become: yes
+  - name: Enable service filebeat
+    service:
+      name: filebeat
+      enabled: yes
+    become: yes
