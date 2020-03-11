@@ -357,6 +357,9 @@ systemctl start kibana.service
 
 #### X-pack白金许可证破解
 
+<details>
+<summary>#### X-pack白金许可证破解</summary>
+ 
 **ES配置**
 
 ```shell
@@ -445,5 +448,7 @@ systemctl restart kibana
 **成功登录后，查看证书状态**
 
 ![image-20200218165816837](./image/image-20200218165816837.png)
+
+</details>
 
 - [返回目录 :leftwards_arrow_with_hook:](#目录)
