@@ -332,7 +332,8 @@ PASSWORD remote_monitoring_user = VRI4kHYjmlVMI8CWFTDu
 PASSWORD elastic = hD7uPvigYS3y6ceuQiFy 
 ```
 - 下载
-  - [:arrow_double_down: x-pack-core-7.6.0.jar](http://192.168.3.153:9980/xyang/yunwen-docs/raw/master/download/x-pack-core-7.6.0.jar)
+  - [:arrow_double_down: x-pack-core-7.6.0.jar](download/x-pack-core-7.6.0.jar)
+  - [:arrow_double_down: x-pack-core-7.6.1.jar](download/x-pack-core-7.6.1.jar)
   - [:arrow_double_down: license.json](download/license.json)
 
 ```shell
