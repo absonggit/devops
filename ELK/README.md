@@ -1,6 +1,5 @@
 [:house: 主页](../README.md) 
 
-<HR style="FILTER: progid:DXImageTransform.Microsoft.Shadow(color:#987cb9,direction:145,strength:15)" width="80%" color=#987cb9 SIZE=1>
  
 ### 目录 
 - [节点说明](#节点说明)
