@@ -1,0 +1,28 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: no
+  tasks:
+    - name: Create a backup directory
+      file:
+        path: /opt/backup
+        state: directory
+    - name: Delete backup files
+      file:
+        path: /opt/backup/{{ item }}.tar.gz
+        state: absent
+      with_items:
+        - channel_app
+        - channel_pay
+        - channel_service
+    - name: Backup file
+      archive:
+        path: /home/wwwroot/{{ item }}/*
+        dest: /opt/backup/{{ item }}.tar.gz
+        exclude_path: /home/wwwroot/{{ item }}/runtime
+        format: gz
+      ignore_errors: yes
+      with_items:
+        - channel_app
+        - channel_pay
+        - channel_service
