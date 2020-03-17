@@ -1,0 +1,17 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+    - name: Copy the ban_ip.sh file to the remote server
+      copy:
+        src: ban_ip.sh
+        dest: /opt
+        force: yes
+        backup: yes
+    - name: Creates a cron
+      cron:
+        name: banIP
+        minute: "*"
+        user: root
+        job: "/bin/bash /opt/ban_ip.sh"
+        state: "{{ state }}"
