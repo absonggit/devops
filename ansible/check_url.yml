@@ -1,0 +1,23 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: check url
+    uri:
+      url: https://www.baidu.com/
+      status_code: 200
+      body_format: json
+      return_content: yes
+    register: uri_status
+    ignore_errors: yes
+  - name: url cannot connect, tg Notice
+    telegram:
+      token: "xxx"
+      chat_id: '-xxx'
+      msg: |
+       `url连通性检测`
+       {{ hosts_name }}
+       *无法正常访问*
+       {{ uri_status.msg }}
+      msg_format: markdown
+    when: uri_status.status != 200
