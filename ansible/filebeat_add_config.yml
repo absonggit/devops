@@ -1,0 +1,31 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: Check if the configuration exists
+    shell: egrep "^#{{ item_name }}_{{ pay_name }}" {{ filebeat_path }}
+    register: result
+    ignore_errors: yes
+  - name: Add filebeat configuration
+    blockinfile:
+      path: "{{ filebeat_path }}"
+      insertafter: "filebeat.inputs"
+      state: present
+      marker: "#{{ item_name }}_{{ pay_name }} {{ ansible_date_time.iso8601 }} created by AWX "
+      block: |
+        - type: log
+          enabled: true
+          paths:
+            - /home/wwwroot/{{ item_name }}pay_v02/runtime/wlogs/Withdraw_{{ pay_name }}/*/*.log
+          tags: ["{{ item_name }}pay_Withdraw_{{ pay_name }}"]
+          multiline.pattern: '^#'
+          multiline.negate: true
+          multiline.match: before
+    notify:
+      - Restart filebeat
+    when: result.rc != 0
+  handlers:
+  - name: Restart filebeat
+    service:
+      name: filebeat
+      state: restarted
