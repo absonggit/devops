@@ -128,3 +128,121 @@ curl -u elastic:123456 127.0.0.1:9200/_license
 ```
 
 </details>
+
+----
+
+<details>
+<summary>制作破解包</summary>
+ 
+```shell
+# 安装ES和JDK
+dnf install -y https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.13.4-x86_64.rpm
+dnf install -y java-17-openjdk java-17-openjdk-devel
+# 下载x-pack源码文件
+curl -o LicenseVerifier.java -s  https://raw.githubusercontent.com/elastic/elasticsearch/v8.13.4/x-pack/plugin/core/src/main/java/org/elasticsearch/license/LicenseVerifier.java
+curl -o XPackBuild.java -s https://raw.githubusercontent.com/elastic/elasticsearch/v8.13.4/x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/XPackBuild.java
+```
+
+#### 修改 LicenseVerifier.java 以下内容
+
+```java
+    public static boolean verifyLicense(final License license, PublicKey publicKey) {
+        byte[] signedContent = null;
+        byte[] publicKeyFingerprint = null;
+        try {
+            byte[] signatureBytes = Base64.getDecoder().decode(license.signature());
+            ByteBuffer byteBuffer = ByteBuffer.wrap(signatureBytes);
+            @SuppressWarnings("unused")
+            int version = byteBuffer.getInt();
+            int magicLen = byteBuffer.getInt();
+            byte[] magic = new byte[magicLen];
+            byteBuffer.get(magic);
+            int hashLen = byteBuffer.getInt();
+            publicKeyFingerprint = new byte[hashLen];
+            byteBuffer.get(publicKeyFingerprint);
+            int signedContentLen = byteBuffer.getInt();
+            signedContent = new byte[signedContentLen];
+            byteBuffer.get(signedContent);
+            XContentBuilder contentBuilder = XContentFactory.contentBuilder(XContentType.JSON);
+            license.toXContent(contentBuilder, new ToXContent.MapParams(Collections.singletonMap(License.LICENSE_SPEC_VIEW_MODE, "true")));
+            Signature rsa = Signature.getInstance("SHA512withRSA");
+            rsa.initVerify(publicKey);
+            BytesRefIterator iterator = BytesReference.bytes(contentBuilder).iterator();
+            BytesRef ref;
+            while ((ref = iterator.next()) != null) {
+                rsa.update(ref.bytes, ref.offset, ref.length);
+            }
+            boolean verifyResult = rsa.verify(signedContent);
+            if (verifyResult == false) {
+                logger.warn(
+                    () -> format(
+                        "License with uid [%s] failed signature verification with the public key with sha256 [%s].",
+                        license.uid(),
+                        PUBLIC_KEY_DIGEST_HEX_STRING
+                    )
+                );
+            }
+            return verifyResult;
+        } catch (IOException | NoSuchAlgorithmException | SignatureException | InvalidKeyException e) {
+            throw new IllegalStateException(e);
+        } finally {
+            if (signedContent != null) {
+                Arrays.fill(signedContent, (byte) 0);
+            }
+        }
+    }
+```
+
+#### 为
+
+```java
+    public static boolean verifyLicense(final License license, PublicKey publicKey) {
+        return true;
+    }
+```
+
+##### 修改 XPackBuild.java 以下内容
+
+```java
+        Path path = getElasticsearchCodebase();
+        if (path.toString().endsWith(".jar")) {
+            try (JarInputStream jar = new JarInputStream(Files.newInputStream(path))) {
+                Manifest manifest = jar.getManifest();
+                shortHash = manifest.getMainAttributes().getValue("Change");
+                date = manifest.getMainAttributes().getValue("Build-Date");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            // not running from a jar (unit tests, IDE)
+            shortHash = "Unknown";
+            date = "Unknown";
+        }
+
+        CURRENT = new XPackBuild(shortHash, date);
+```
+#### 为
+
+```java
+        Path path = getElasticsearchCodebase();
+        shortHash = "Unknown";
+        date = "Unknown";
+        CURRENT = new XPackBuild(shortHash, date);
+  
+```
+
+```shell
+# 编译代码
+javac -cp "/usr/share/elasticsearch/lib/*:/usr/share/elasticsearch/modules/x-pack-core/*" LicenseVerifier.java
+javac -cp "/usr/share/elasticsearch/lib/*:/usr/share/elasticsearch/modules/x-pack-core/*" XPackBuild.java
+# 复制解压包
+cp /usr/share/elasticsearch/modules/x-pack-core/x-pack-core-8.13.4.jar x-pack-core-8.13.4.jar
+unzip x-pack-core-8.13.4.jar -d ./x-pack-core-8.13.4
+# 复制编译后的文件
+cp LicenseVerifier.class ./x-pack-core-8.13.4/org/elasticsearch/license/
+cp XPackBuild.class ./x-pack-core-8.13.4/org/elasticsearch/xpack/core/
+# 打包
+jar -cvf x-pack-core-8.13.4.crack.jar -C x-pack-core-8.13.4/ .
+```
+
+</details>
