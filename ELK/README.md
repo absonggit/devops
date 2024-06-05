@@ -2,7 +2,7 @@
 [:house: 主页](../README.md) 
 
 ----
- [docker 部署 8.x 文档](./es-8.x-docker.md)
+ [Docker 部署 8.x 文档](./es-8.x-docker.md)
 
 -----
 以下是7.x
