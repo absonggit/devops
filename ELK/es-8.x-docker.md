@@ -100,145 +100,31 @@ services:
 ----
 
 <details>
-<summary>启动并验证服务</summary>
+<summary>启动服务</summary>
  
 ```shell
+# 启动容器
 docker compose up -d
+# 查看服务状态
 curl elastic:123456@127.0.0.1:9200/_cat/health
-1717574723 08:05:23 es green 3 3 80 40 0 0 0 0 - 100.0%
 ```
+
+----
 
 </details>
 
 ----
 
-#### Kibana安装配置
-
 <details>
-<summary>安装elasticsearch</summary>
+<summary>激活许可证</summary>
  
 ```shell
-# 安装kibana
-yum install kibana -y
-systemctl enable kibana
-
-# 修改配置
-vim /etc/kibana/kibana.yml
-server.port: 5601
-server.host: "0.0.0.0"
-elasticsearch.hosts:
-  - "http://192.168.1.27:9200"
-  - "http://192.168.1.112:9200"
-  - "http://192.168.1.58:9200"
-kibana.index: ".kibana"
-i18n.locale: "zh-CN"
-
-# 启动
-systemctl start kibana.service
+# 提交许可证
+curl  -XPUT -u elastic:123456 127.0.0.1:9200/_license -H "Content-Type: application/json" -d @platinum_license.json
+# 重新创建容器
+docker compose up -d --force-recreate
+# 查看许可证信息
+curl -u elastic:123456 127.0.0.1:9200/_license
 ```
-
-- [返回目录 :leftwards_arrow_with_hook:](#目录)
 
 </details>
-
-----
-
-#### X-pack白金许可证破解
-
-<details>
-<summary>X-pack白金许可证破解</summary>
- 
-**ES配置**
-
-```shell
-# ES生成证书
-/usr/share/elasticsearch/bin/elasticsearch-certutil ca
-/usr/share/elasticsearch/bin/elasticsearch-certutil cert --ca elastic-stack-ca.p12
-
-# 设置证书文件的权限
-chgrp elasticsearch /usr/share/elasticsearch/elastic-certificates.p12 /usr/share/elasticsearch/elastic-stack-ca.p12
-
-chmod 640 /usr/share/elasticsearch/elastic-certificates.p12 /usr/share/elasticsearch/elastic-stack-ca.p12
-
-# 移动到ES配置目录，把证书文件复制到其他master节点并赋予相关的权限。
-mv /usr/share/elasticsearch/elastic-* /etc/elasticsearch/
-
-# 三台服务器都要操作
-# ES增加配置
-xpack.security.enabled: false
-xpack.security.transport.ssl.enabled: true
-xpack.security.transport.ssl.verification_mode: certificate
-xpack.security.transport.ssl.keystore.path: /etc/elasticsearch/elastic-certificates.p12
-xpack.security.transport.ssl.truststore.path: /etc/elasticsearch/elastic-certificates.p12
-
-# 复制破解后的X-pack包到ES模块目录
-cp /root/x-pack-core-7.6.0.jar /usr/share/elasticsearch/modules/x-pack-core/
-
-# 重启整个ES集群
-systemctl restart elasticsearch.service
-
-# 上传许可证信息到集群
-curl -XPUT -u elastic 'http://192.168.1.27:9200/_xpack/license' -H "Content-Type: application/json" -d @license.json
-
-# 修改ES配置然后重启集群
-xpack.security.enabled: true
-
-# 生成用户密码
-/usr/share/elasticsearch/bin/elasticsearch-setup-passwords auto
-PASSWORD apm_system = GP5ab69FQUZXBXXr5gG9
-PASSWORD kibana = 1DKGjq2DX5sGlORgEVTQ
-PASSWORD logstash_system = aGkcCh2gqNa9MOoeNbTO
-PASSWORD beats_system = HxyjDTdvgrgH0iIIbUWH
-PASSWORD remote_monitoring_user = VRI4kHYjmlVMI8CWFTDu
-# elastic 是整个elk-stack 管理员账号密码
-PASSWORD elastic = hD7uPvigYS3y6ceuQiFy 
-```
-- 下载
-  - [:arrow_double_down: x-pack-core-7.6.0.jar](download/x-pack-core-7.6.0.jar)
-  - [:arrow_double_down: x-pack-core-7.6.1.jar](download/x-pack-core-7.6.1.jar)
-  - [:arrow_double_down: license.json](download/license.json)
-
-```shell
-# 验证许可证状态 active 表示激活， 过期时间 "expiry_date" : "2049-12-31T16:00:00.999Z"**
-curl -XGET -u elastic:hD7uPvigYS3y6ceuQiFy http://192.168.1.27:9200/_license
-```
-```json
-{
-  "license" : {
-    "status" : "active",
-    "uid" : "537c5c48-c1dd-43ea-ab69-68d209d80c32",
-    "type" : "platinum",
-    "issue_date" : "2019-05-17T00:00:00.000Z",
-    "issue_date_in_millis" : 1558051200000,
-    "expiry_date" : "2049-12-31T16:00:00.999Z",
-    "expiry_date_in_millis" : 2524579200999,
-    "max_nodes" : 1000,
-    "issued_to" : "pyker",
-    "issuer" : "Web Form",
-    "start_date_in_millis" : 1558051200000
-  }
-```
-
-**Kibana配置**
-```shell
-# 配置kibana使用账密登录
-vim /etc/kibana/kibana.yml
-elasticsearch.username: "elastic"
-elasticsearch.password: "hD7uPvigYS3y6ceuQiFy"
-
-# 重启kibana 再次登录需要输入账号密码
-systemctl restart kibana
-```
-
-![image-20200218165654489](./image/image-20200218165654489.png)
-
-
-**成功登录后，查看证书状态**
-
-![image-20200218165816837](./image/image-20200218165816837.png)
-
-- [返回目录 :leftwards_arrow_with_hook:](#目录)
-
-</details>
-
-
