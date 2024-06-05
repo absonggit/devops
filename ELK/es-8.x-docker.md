@@ -18,9 +18,8 @@ chmod 777 -R /opt/es
 
 ```
 - 下载
-  - [:arrow_double_down: x-pack-core-7.6.0.jar](download/x-pack-core-7.6.0.jar)
-  - [:arrow_double_down: x-pack-core-7.6.1.jar](download/x-pack-core-7.6.1.jar)
-  - [:arrow_double_down: license.json](download/license.json)
+  - [:arrow_double_down: x-pack-core-8.13.4.crack.jar](download/x-pack-core-8.13.4.crack.jar)
+  - [:arrow_double_down: platinum_license.json](download/platinum_license.json)
 
 </details>
 
