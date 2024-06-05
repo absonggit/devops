@@ -2,6 +2,7 @@
 [:house: 主页](../README.md) 
 
  [docker 部署 8.x 文档](./es-8.x-docker.md)
+ 以下是7.x
 ### 目录 
 - [节点说明](#节点说明)
 - [Yum配置](#yum配置)
