@@ -131,7 +131,7 @@ curl -u elastic:123456 127.0.0.1:9200/_license
 </details>
 
 ----
-
+#### 附录1
 <details>
 <summary>制作破解包</summary>
  
@@ -143,7 +143,7 @@ dnf install -y java-17-openjdk java-17-openjdk-devel
 curl -o LicenseVerifier.java -s  https://raw.githubusercontent.com/elastic/elasticsearch/v8.13.4/x-pack/plugin/core/src/main/java/org/elasticsearch/license/LicenseVerifier.java
 curl -o XPackBuild.java -s https://raw.githubusercontent.com/elastic/elasticsearch/v8.13.4/x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/XPackBuild.java
 ```
-#### 附录1
+
 #### 修改 LicenseVerifier.java 以下内容
 
 ```java
