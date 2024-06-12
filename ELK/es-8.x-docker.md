@@ -2,9 +2,9 @@
 
  | 内网IP        | 主机名          | 软件                | 系统 |
  | ------------- | ----------------- | ----------------------- | ----------------------- | 
- | 192.168.1.27  | es.node1 | ES | CentOS Stream release 9 |
- | 192.168.1.112 | es.node2 | ES | CentOS Stream release 9 |
- | 192.168.1.58  | es.node3 | ES | CentOS Stream release 9 |
+ | 192.168.1.27  | es.node1 | ES 8.13.4 | CentOS Stream release 9 |
+ | 192.168.1.112 | es.node2 | ES 8.13.4 | CentOS Stream release 9 |
+ | 192.168.1.58  | es.node3 | ES 8.13.4 | CentOS Stream release 9 |
 
 ----
 
