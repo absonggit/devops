@@ -18,6 +18,7 @@ chmod 777 -R /opt/es
 
 ```
 - 下载
+  - 这里做好了8.13.4的x-pack破解包，版本不一样可以自己制作对应版本的。请看附录
   - [:arrow_double_down: x-pack-core-8.13.4.crack.jar](download/x-pack-core-8.13.4.crack.jar)
   - [:arrow_double_down: platinum_license.json](download/platinum_license.json)
 
