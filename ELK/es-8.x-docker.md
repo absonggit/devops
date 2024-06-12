@@ -4,7 +4,7 @@
  | ------------- | ----------------- | ----------------------- | ----------------------- | 
  | 192.168.1.27  | es.node1 | ES | CentOS Stream release 9 |
  | 192.168.1.112 | es.node2 | ES | CentOS Stream release 9 |
- | 192.168.1.58  | es.node3 | ES |C entOS Stream release 9 |
+ | 192.168.1.58  | es.node3 | ES | CentOS Stream release 9 |
 
 ----
 
