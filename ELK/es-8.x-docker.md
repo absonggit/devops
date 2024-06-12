@@ -18,7 +18,7 @@ chmod 777 -R /opt/es
 
 ```
 - 下载
-  - 这里做好了8.13.4的x-pack破解包，版本不一样可以自己制作对应版本的。请看 [附录](#附录)
+  - 这里做好了8.13.4的x-pack破解包，版本不一样可以自己制作对应版本的。请看 [附录1](#附录1)
   - [:arrow_double_down: x-pack-core-8.13.4.crack.jar](download/x-pack-core-8.13.4.crack.jar)
   - [:arrow_double_down: platinum_license.json](download/platinum_license.json)
 
@@ -131,7 +131,7 @@ curl -u elastic:123456 127.0.0.1:9200/_license
 </details>
 
 ----
-#### 附录
+
 <details>
 <summary>制作破解包</summary>
  
@@ -143,7 +143,7 @@ dnf install -y java-17-openjdk java-17-openjdk-devel
 curl -o LicenseVerifier.java -s  https://raw.githubusercontent.com/elastic/elasticsearch/v8.13.4/x-pack/plugin/core/src/main/java/org/elasticsearch/license/LicenseVerifier.java
 curl -o XPackBuild.java -s https://raw.githubusercontent.com/elastic/elasticsearch/v8.13.4/x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/XPackBuild.java
 ```
-
+#### 附录
 #### 修改 LicenseVerifier.java 以下内容
 
 ```java
